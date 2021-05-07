@@ -12,6 +12,7 @@ public class Member {
     @Id @GeneratedValue
     @Column(name="member_id")
     private Long id;
+    private String name;
     private String login_id;
     private String password;
     @OneToMany(mappedBy = "receivedMember",cascade = CascadeType.ALL)
@@ -20,9 +21,8 @@ public class Member {
     @OneToMany(mappedBy = "sentMember",cascade = CascadeType.ALL)
     private List<Message> sentMessage;
 
-    @OneToMany
-    @JoinColumn
-    private List<Member> friends;
+    @OneToOne(mappedBy="member")
+    private Friends friends;
 
 
 }
