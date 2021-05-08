@@ -17,4 +17,5 @@ public class Room {
     @JoinColumn(name="member_id")
     private Member createMember;
 
+
 }
