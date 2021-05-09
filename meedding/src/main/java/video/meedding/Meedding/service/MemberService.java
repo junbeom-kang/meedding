@@ -17,12 +17,11 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public class MemberService {
     private final MemberRepository memberRepository;
-
+    @Transactional
     public void join(Member member) {
         Optional<Member> result = memberRepository.findByLoginid(member.getLoginid());
         if (result.isPresent()) throw new ExistedEmailException("이미 존재하는 이메일입니다");
         memberRepository.save(member);
-
     }
 
     public List<Member> getAllMember() {
@@ -37,7 +36,7 @@ public class MemberService {
     public Member findMemberById(Long id) {
         return memberRepository.findById(id).orElseThrow(()->new NoMemberException("해당 회원이 없습니다"));
     }
-
+    @Transactional
     public void updateMemberInfo(Long id, CreateMemberDto createMemberDto) {
         Member member=memberRepository.findById(id).orElseThrow(()-> new NoMemberException("해당 회원이 없습니다"));
         member.setName(createMemberDto.getName());
@@ -45,6 +44,8 @@ public class MemberService {
         member.setPassword(createMemberDto.getPassword());
         member.setNickname(createMemberDto.getNickname());
     }
+    //@Transactional
+    //public void updatePassword(Long id,)
 
 
 }

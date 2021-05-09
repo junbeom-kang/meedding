@@ -1,7 +1,9 @@
 package video.meedding.Meedding.domain;
 
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -9,6 +11,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@NoArgsConstructor(access= AccessLevel.PROTECTED)
 public class Member {
     @Id @GeneratedValue
     @Column(name="member_id")
@@ -23,6 +26,8 @@ public class Member {
 
     @OneToMany(mappedBy = "sentMember",cascade = CascadeType.ALL)
     private List<Message> sentMessage;
+    private String token;
+
 
 
     public void setName(String name) {
