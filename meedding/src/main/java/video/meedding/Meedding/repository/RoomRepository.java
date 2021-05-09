@@ -6,5 +6,5 @@ import video.meedding.Meedding.domain.Room;
 import java.util.Optional;
 
 public interface RoomRepository extends JpaRepository<Room, Long> {
-    Optional<Room> findByRoomNumber(Long number);
+    Optional<Room> findByRoomNumber(String number);
 }

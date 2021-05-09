@@ -19,7 +19,7 @@ public class MessageService {
     private final MessageRepository messageRepository;
 
     @Transactional
-    public void join(Long sentId, Long receivedId, String contents) {
+    public void Message(Long sentId, Long receivedId, String contents) {
         Member sentM = memberRepository.findById(sentId).orElseThrow(()->new NoMemberException());
         Member receivedM = memberRepository.findById(receivedId).orElseThrow(()->new NoMemberException());
         Message message = Message.createMessage(sentM, receivedM, contents);
