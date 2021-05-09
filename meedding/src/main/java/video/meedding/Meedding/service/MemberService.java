@@ -4,9 +4,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import video.meedding.Meedding.domain.Member;
+import video.meedding.Meedding.dto.ChangePasswordDto;
 import video.meedding.Meedding.dto.CreateMemberDto;
 import video.meedding.Meedding.exception.ExistedEmailException;
 import video.meedding.Meedding.exception.NoMemberException;
+import video.meedding.Meedding.exception.PasswordDiffException;
 import video.meedding.Meedding.repository.MemberRepository;
 
 import java.util.List;
@@ -44,8 +46,15 @@ public class MemberService {
         member.setPassword(createMemberDto.getPassword());
         member.setNickname(createMemberDto.getNickname());
     }
-    //@Transactional
-    //public void updatePassword(Long id,)
+
+    @Transactional
+    public void updatePassword(Long id, ChangePasswordDto changePasswordDto) {
+        Member member = memberRepository.findById(id).orElseThrow(()->new NoMemberException("해당 회원이 없습니다"));
+        if (!member.getPassword().equals(changePasswordDto.getOldPassword())) {
+            throw new PasswordDiffException("기존 패스워드가 일치하지 않습니다");
+        }
+        member.setPassword(changePasswordDto.getNewPassword());
+    }
 
 
 }
