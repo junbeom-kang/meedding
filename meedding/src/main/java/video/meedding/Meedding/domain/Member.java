@@ -4,6 +4,7 @@ package video.meedding.Meedding.domain;
 import lombok.Getter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -14,9 +15,8 @@ public class Member {
     private Long id;
     private String name;
     private String nickname;
-
-
-    private String login_id;
+    private LocalDate signUpDate;
+    private String loginid;
     private String password;
     @OneToMany(mappedBy = "receivedMember",cascade = CascadeType.ALL)
     private List<Message> receivedMessage;
@@ -30,7 +30,7 @@ public class Member {
     }
 
     public void setLogin_id(String login_id) {
-        this.login_id = login_id;
+        this.loginid = login_id;
     }
 
     public void setPassword(String password) {
