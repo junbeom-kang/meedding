@@ -28,7 +28,15 @@ public class Member {
     private List<Message> sentMessage;
     private String token;
 
-
+    public static Member createMember(String name, String nickname, String loginid, String password) {
+        Member member=new Member();
+        member.name = name;
+        member.nickname = nickname;
+        member.loginid = loginid;
+        member.password = password;
+        member.signUpDate=LocalDate.now();
+        return member;
+    }
 
     public void setName(String name) {
         this.name = name;

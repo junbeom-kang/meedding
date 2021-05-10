@@ -21,6 +21,7 @@ public class Message {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="received_member_id")
     private Member receivedMember;
+    private String title;
     private String contents;
     private LocalDate date;
 
@@ -36,10 +37,11 @@ public class Message {
     }
 
     //생성 메서드
-    public static Message createMessage(Member sentMember, Member receivedMember,String contents) {
+    public static Message createMessage(Member sentMember, Member receivedMember,String title,String contents) {
         Message message=new Message();
         message.sentMember=sentMember;
         message.receivedMember=receivedMember;
+        message.title=title;
         message.contents=contents;
         message.date=LocalDate.now();
         return message;

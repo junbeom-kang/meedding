@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import video.meedding.Meedding.domain.Member;
 import video.meedding.Meedding.domain.Message;
+import video.meedding.Meedding.dto.CreateMessageDto;
 import video.meedding.Meedding.exception.NoMemberException;
 import video.meedding.Meedding.repository.MemberRepository;
 import video.meedding.Meedding.repository.MessageRepository;
@@ -19,10 +20,10 @@ public class MessageService {
     private final MessageRepository messageRepository;
 
     @Transactional
-    public void Message(Long sentId, Long receivedId, String contents) {
-        Member sentM = memberRepository.findById(sentId).orElseThrow(()->new NoMemberException());
-        Member receivedM = memberRepository.findById(receivedId).orElseThrow(()->new NoMemberException());
-        Message message = Message.createMessage(sentM, receivedM, contents);
+    public void Message(CreateMessageDto createMessageDto) {
+        Member sentM = memberRepository.findById(createMessageDto.getSentMemberId()).orElseThrow(()->new NoMemberException());
+        Member receivedM = memberRepository.findById(createMessageDto.getReceivedMemberId()).orElseThrow(()->new NoMemberException());
+        Message message = Message.createMessage(sentM, receivedM, createMessageDto.getTitle(), createMessageDto.getContents());
         messageRepository.save(message);
     }
 

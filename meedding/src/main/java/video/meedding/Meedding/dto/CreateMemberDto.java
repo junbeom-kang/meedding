@@ -1,5 +1,6 @@
 package video.meedding.Meedding.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.validation.constraints.Email;
@@ -7,6 +8,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Data
+@AllArgsConstructor
 public class CreateMemberDto {
     @NotBlank(message = "이메일을 입력해주세요")
     @Email(message = "이메일 형식으로 장석해주세요")

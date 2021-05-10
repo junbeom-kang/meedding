@@ -6,13 +6,12 @@ import org.springframework.transaction.annotation.Transactional;
 import video.meedding.Meedding.domain.Member;
 import video.meedding.Meedding.dto.ChangePasswordDto;
 import video.meedding.Meedding.dto.CreateMemberDto;
-import video.meedding.Meedding.exception.ExistedEmailException;
-import video.meedding.Meedding.exception.NoMemberException;
-import video.meedding.Meedding.exception.PasswordDiffException;
+import video.meedding.Meedding.dto.UpdateMemberDto;
+import video.meedding.Meedding.exception.*;
 import video.meedding.Meedding.repository.MemberRepository;
 
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 @RequiredArgsConstructor
@@ -20,10 +19,18 @@ import java.util.Optional;
 public class MemberService {
     private final MemberRepository memberRepository;
     @Transactional
-    public void join(Member member) {
-        Optional<Member> result = memberRepository.findByLoginid(member.getLoginid());
-        if (result.isPresent()) throw new ExistedEmailException("이미 존재하는 이메일입니다");
-        memberRepository.save(member);
+    public Long join(CreateMemberDto createMemberDto) {
+        if (memberRepository.findByLoginid(createMemberDto.getEmail()).isPresent()) {
+            throw new ExistedEmailException("이미 존재하는 이메일입니다");
+        }
+        if (memberRepository.findByNickname(createMemberDto.getNickname()).isPresent()){
+            throw new ExistedNickNameException("이미 존재하는 닉네임입니다");
+        }
+        if (!createMemberDto.getPassword().equals(createMemberDto.getCheckPassword())) {
+            throw new PasswordDiffException("확인 패스워드가 일치하지 않습니다");
+        }
+        Member save = memberRepository.save(Member.createMember(createMemberDto.getName(), createMemberDto.getNickname(), createMemberDto.getEmail(), createMemberDto.getPassword()));
+        return save.getId();
     }
 
     public List<Member> getAllMember() {
@@ -39,12 +46,16 @@ public class MemberService {
         return memberRepository.findById(id).orElseThrow(()->new NoMemberException("해당 회원이 없습니다"));
     }
     @Transactional
-    public void updateMemberInfo(Long id, CreateMemberDto createMemberDto) {
-        Member member=memberRepository.findById(id).orElseThrow(()-> new NoMemberException("해당 회원이 없습니다"));
-        member.setName(createMemberDto.getName());
-        member.setLogin_id(createMemberDto.getEmail());
-        member.setPassword(createMemberDto.getPassword());
-        member.setNickname(createMemberDto.getNickname());
+    public void updateMemberInfo(Long id, UpdateMemberDto updateMemberDto) {
+        Member member=memberRepository.getOne(id);
+        if (!member.getNickname().equals(updateMemberDto.getNickname())) {
+            if (memberRepository.findByNickname(updateMemberDto.getNickname()).isEmpty()) {
+                member.setNickname(updateMemberDto.getNickname());
+            } else {
+                throw new ExistedNickNameException("존재하는 닉네임입니다");
+            }
+        }
+        member.setName(updateMemberDto.getName());
     }
 
     @Transactional
@@ -52,6 +63,8 @@ public class MemberService {
         Member member = memberRepository.findById(id).orElseThrow(()->new NoMemberException("해당 회원이 없습니다"));
         if (!member.getPassword().equals(changePasswordDto.getOldPassword())) {
             throw new PasswordDiffException("기존 패스워드가 일치하지 않습니다");
+        } else if (member.getPassword().equals(changePasswordDto.getNewPassword())) {
+            throw new SamePasswordException("패스워드가 이전 패스워드와 동일합니다");
         }
         member.setPassword(changePasswordDto.getNewPassword());
     }
