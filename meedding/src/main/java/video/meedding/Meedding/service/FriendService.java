@@ -21,6 +21,7 @@ public class FriendService {
     private final MemberRepository memberRepository;
     private final FriendRepository friendRepository;
     //친구추가
+    @Transactional
     public void makeFriend(Long addMemberId, Long targetMemberId) {
         Member member = memberRepository.findById(addMemberId).orElseThrow(() -> new NoMemberException("없는 회원입니다"));
         Member member1 = memberRepository.findById(targetMemberId).orElseThrow(() -> new NoMemberException("없는 회원입니다"));
@@ -42,6 +43,7 @@ public class FriendService {
     }
 
     //친구삭제
+    @Transactional
     public void removeFriend(Long myId, Long targetId) {
         Member me = memberRepository.getOne(myId);
         Member targetMember = memberRepository.findById(targetId).orElseThrow(

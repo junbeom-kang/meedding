@@ -11,6 +11,7 @@ import java.time.LocalDate;
 @Getter
 @NoArgsConstructor(access= AccessLevel.PROTECTED)
 public class Message {
+
     @Id @GeneratedValue
     @Column(name="message_id")
     private Long id;
@@ -22,6 +23,7 @@ public class Message {
     @JoinColumn(name="received_member_id")
     private Member receivedMember;
     private String title;
+    @Lob
     private String contents;
     private LocalDate date;
 
@@ -45,6 +47,17 @@ public class Message {
         message.contents=contents;
         message.date=LocalDate.now();
         return message;
+    }
+    @Override
+    public String toString() {
+        return "Message{" +
+                "id=" + id +
+                ", sentMember=" + sentMember +
+                ", receivedMember=" + receivedMember +
+                ", title='" + title + '\'' +
+                ", contents='" + contents + '\'' +
+                ", date=" + date +
+                '}';
     }
 
 
