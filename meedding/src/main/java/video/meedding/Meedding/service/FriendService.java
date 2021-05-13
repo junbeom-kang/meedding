@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import video.meedding.Meedding.domain.Friend;
 import video.meedding.Meedding.domain.Member;
 import video.meedding.Meedding.exception.CantMakeFriendException;
+import video.meedding.Meedding.exception.DuplicateFriendException;
 import video.meedding.Meedding.exception.NoFriendRelationException;
 import video.meedding.Meedding.exception.NoMemberException;
 import video.meedding.Meedding.repository.FriendRepository;
@@ -22,19 +23,27 @@ public class FriendService {
     private final FriendRepository friendRepository;
     //친구추가
     @Transactional
-    public void makeFriend(Long addMemberId, Long targetMemberId) {
+    public Long makeFriend(Long addMemberId, Long targetMemberId) {
         Member member = memberRepository.findById(addMemberId).orElseThrow(() -> new NoMemberException("없는 회원입니다"));
         Member member1 = memberRepository.findById(targetMemberId).orElseThrow(() -> new NoMemberException("없는 회원입니다"));
         if (member == member1) {
             throw new CantMakeFriendException("나 자신을 추가할 수 없습니다");
+        } else if (friendRepository.findByAddMemberAndTargetMember(member,member1).isPresent()) {
+            throw new DuplicateFriendException("이미 추가된 친구입니다");
         } else {
-            friendRepository.save(Friend.createFriend(member, member1));
+            Friend friend = friendRepository.save(Friend.createFriend(member, member1));
+            return friend.getId();
+
         }
     }
+
+    public Friend findById(Long id) {
+        return friendRepository.findById(id).orElseThrow(() -> new NoFriendRelationException("없는 친구관계입니다"));
+    }
     //추가한 친구 목록
-    public List<Friend> addFriend(Long myId) {
-        Member member = memberRepository.getOne(myId);
-        return friendRepository.findByAddMember(member);
+    public List<Friend> addFriendList(Long myId) {
+        Member result = memberRepository.findById(myId).orElseThrow(() -> new NoMemberException("없는 회원입니다"));
+        return friendRepository.findByAddMember(result);
     }
     //회원을 친구로 추가된 친구 목록
     public List<Friend> targetFriend(Long myId) {
