@@ -30,4 +30,12 @@ public class Friend {
         return friend;
     }
 
+    @Override
+    public String toString() {
+        return "Friend{" +
+                "id=" + id +
+                ", addMember=" + addMember.getId() +
+                ", targetMember=" + targetMember.getId() +
+                '}';
+    }
 }

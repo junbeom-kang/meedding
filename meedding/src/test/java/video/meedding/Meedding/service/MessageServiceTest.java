@@ -26,7 +26,7 @@ class MessageServiceTest {
 
     @Test
     @Rollback(value = false)
-    public void 메시지_저장_테스트() throws Exception {
+    public void 메시지_저장_JPA_테스트() throws Exception {
         //given,when
         Long []messageId=createM();
 

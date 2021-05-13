@@ -22,12 +22,13 @@ public class RoomService {
     private final MemberRepository memberRepository;
 
     @Transactional
-    public void Room(Long memberId, CreateRoomDto createRoomDto) {
+    public Long Room(Long memberId, CreateRoomDto createRoomDto) {
         String roomNumber=getRoomNumber();
         String roomPassword=getRoomPassword();
         Member member = memberRepository.findById(memberId).orElseThrow(()->new NoMemberException());
         Room room=Room.createRoom(member,createRoomDto.getTitle(),roomNumber,roomPassword);
-        roomRepository.save(room);
+        Room result=roomRepository.save(room);
+        return result.getId();
     }
     public List<Room> allRoom() {
         return roomRepository.findAll();
@@ -41,6 +42,10 @@ public class RoomService {
     public void deleteRoom(Long roomId) {
         Room room=roomRepository.findById(roomId).orElseThrow(() -> new NoMatchingRoomException("일치하는 방이 없습니다"));
         roomRepository.delete(room);
+    }
+
+    public Room findById(Long id) {
+        return roomRepository.findById(id).orElseThrow(() -> new NoMatchingRoomException("해당 방이 없습니다"));
     }
 
 

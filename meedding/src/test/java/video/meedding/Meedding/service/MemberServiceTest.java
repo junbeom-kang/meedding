@@ -36,7 +36,7 @@ class MemberServiceTest {
 
 
     @Test
-    public void 회원가입_테스트() throws Exception {
+    public void 회원가입_JPA_테스트() throws Exception {
         //given
         CreateMemberDto createMemberDto = new CreateMemberDto(
                 "k@n.com", "qwer", "qwer", "준범", "abcd");
