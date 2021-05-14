@@ -14,3 +14,8 @@ spring:
 logging.level:
   org.hibernate.SQL: debug
 
+domain:
+  https://meedding.kro.kr
+kakao:
+  clientId: 9ab70c68899154e1060b5e2979b54d92
+  redirectUri: https://meedding.kro.kr/auth/kakao/callback
