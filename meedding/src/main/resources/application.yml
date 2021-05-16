@@ -15,7 +15,9 @@ logging.level:
   org.hibernate.SQL: debug
 
 domain:
-  https://meedding.kro.kr
+  http://localhost:8080
+
 kakao:
   clientId: 9ab70c68899154e1060b5e2979b54d92
-  redirectUri: https://meedding.kro.kr/auth/kakao/callback
+  redirectUri: http://localhost:8080/auth/kakao/callback
+cosKey: cos1234
