@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import video.meedding.Meedding.dto.KakaoCommunicationFailureException;
 import video.meedding.Meedding.model.OAuthToken;
-
+/*
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -45,3 +45,6 @@ public class AuthService {
 
     }
 }
+
+
+ */

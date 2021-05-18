@@ -1,5 +1,6 @@
 package video.meedding.Meedding.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,9 +14,14 @@ public class Room {
     @Id @GeneratedValue
     @Column(name="room_id")
     private Long id;
+
     private String roomTitle;
+
     private String roomNumber;
+
     private String roomPassword;
+
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="member_id")
     private Member createMember;

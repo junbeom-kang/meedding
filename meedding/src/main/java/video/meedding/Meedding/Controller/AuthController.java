@@ -1,6 +1,6 @@
 package video.meedding.Meedding.Controller;
 
-import com.google.gson.Gson;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
@@ -13,7 +13,7 @@ import org.springframework.web.client.RestTemplate;
 import video.meedding.Meedding.dto.KakaoCommunicationFailureException;
 import video.meedding.Meedding.model.OAuthToken;
 import video.meedding.Meedding.service.AuthService;
-
+/*
 @RestController
 @RequiredArgsConstructor
 public class AuthController {
@@ -27,3 +27,6 @@ public class AuthController {
 
     }
 }
+
+
+ */

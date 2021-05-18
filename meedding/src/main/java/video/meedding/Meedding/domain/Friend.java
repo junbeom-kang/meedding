@@ -1,5 +1,6 @@
 package video.meedding.Meedding.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,10 +16,12 @@ public class Friend {
     @Column(name="friend_id")
     private Long id;
 
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name="addMember_id")
     private Member addMember;
 
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name="targetMember_id")
     private Member targetMember;

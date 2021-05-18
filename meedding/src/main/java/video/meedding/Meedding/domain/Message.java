@@ -1,5 +1,6 @@
 package video.meedding.Meedding.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,16 +16,22 @@ public class Message {
     @Id @GeneratedValue
     @Column(name="message_id")
     private Long id;
+
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="sent_member_id")
     private Member sentMember;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="received_member_id")
     private Member receivedMember;
+
     private String title;
+
     @Lob
     private String contents;
+
     private LocalDate date;
 
     //연관관계 메서드
