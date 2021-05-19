@@ -26,7 +26,7 @@ public class MessageController {
         return new Result<Integer>(HttpStatus.OK.value());
     }
 
-    /*
+
         @GetMapping("/message/sent")
         public Result sentMessages() {
             Long id=SessionUser.getId();
@@ -44,7 +44,7 @@ public class MessageController {
                     .map(m->new MessageResponseDto(m.getId(),m.getTitle(),m.getContents())).collect(Collectors.toList());
             return new Result(result);
         }
-        */
+
 
     @GetMapping("/messages/{id}")
     public Result readMessage(@PathVariable Long id) {
