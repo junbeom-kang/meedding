@@ -1,6 +1,7 @@
 package video.meedding.Meedding.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import video.meedding.Meedding.domain.Member;
@@ -17,6 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class MemberService {
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final MemberRepository memberRepository;
     @Transactional
     public Long join(CreateMemberDto createMemberDto) {
@@ -29,6 +31,7 @@ public class MemberService {
         if (!createMemberDto.getPassword().equals(createMemberDto.getCheckPassword())) {
             throw new PasswordDiffException("확인 패스워드가 일치하지 않습니다");
         }
+        createMemberDto.setPassword(bCryptPasswordEncoder.encode(createMemberDto.getPassword()));
         Member save = memberRepository.save(Member.createMember(createMemberDto.getName(), createMemberDto.getNickname(), createMemberDto.getEmail(), createMemberDto.getPassword()));
         return save.getId();
     }

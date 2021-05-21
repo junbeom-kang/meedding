@@ -1,5 +1,5 @@
 package video.meedding.Meedding.Controller;
-
+/*
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -52,3 +52,5 @@ public class MessageController {
         return new Result(message);
     }
 }
+
+ */

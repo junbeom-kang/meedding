@@ -37,6 +37,7 @@ public class Member {
     @OneToMany(mappedBy = "sentMember",cascade = CascadeType.ALL)
     private List<Message> sentMessage;
     private String token;
+
     @Enumerated(EnumType.STRING)
     private Role role;
 
