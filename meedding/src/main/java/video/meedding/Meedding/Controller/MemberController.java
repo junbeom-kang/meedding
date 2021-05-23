@@ -5,14 +5,17 @@ import lombok.RequiredArgsConstructor;
 import org.hibernate.sql.Update;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import video.meedding.Meedding.config.auth.PrincipalDetails;
 import video.meedding.Meedding.domain.Member;
 import video.meedding.Meedding.dto.CreateMemberDto;
 import video.meedding.Meedding.dto.ResponseMemberDto;
+import video.meedding.Meedding.dto.ResponseMyInfo;
 import video.meedding.Meedding.dto.UpdateMemberDto;
 import video.meedding.Meedding.dto.response.Result;
 import video.meedding.Meedding.service.MemberService;
+import video.meedding.Meedding.service.ResponseService;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -23,45 +26,43 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class MemberController {
     private final MemberService memberService;
+    private final ResponseService responseService;
 
-    @GetMapping("/v1/user")
-    public String user(Authentication authentication) {
-        PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
-        System.out.println("principal : "+principal.getMember().getId());
-        System.out.println("principal : "+principal.getMember().getLoginid());
-        System.out.println("principal : "+principal.getMember().getPassword());
-
-        return "<h1>user</h1>";
-    }
     @GetMapping("/members")
     public Result getMemberList() {
+
         List<Member> allMember = memberService.getAllMember();
         List<ResponseMemberDto> memberList = allMember.stream()
                 .map(m -> new ResponseMemberDto(m.getLoginid(), m.getName()))
                 .collect(Collectors.toList());
-        return new Result(memberList);
+        return responseService.getListResult(memberList);
     }
 
     @PostMapping("/members")
     public Result memberJoin(@RequestBody CreateMemberDto createMemberDto) {
-        System.out.println("들어왔읍");
         memberService.join(createMemberDto);
-        return new Result<Integer>(HttpStatus.OK.value());
+        return responseService.getSuccessResult();
     }
 
 
     @GetMapping("/members/{id}")
     public Result getIdMember(@PathVariable Long id) {
-        Member memberById = memberService.findMemberById(id);
-        return new Result(memberById);
+        Member m = memberService.findMemberById(id);
+        return responseService.getSingleResult(new ResponseMemberDto(m.getLoginid(),m.getName()));
     }
-/*
+
     @PostMapping("members/update")
-    public Result updateMember(@RequestBody UpdateMemberDto updateMemberDto) {
-     SessionUser user=(SessionUser)httpSession.getAttribute("user");
-     memberService.updateMemberInfo(user.getId(),updateMemberDto);
-        return new Result<Integer>(HttpStatus.OK.value());
+    public Result updateMember(@RequestBody UpdateMemberDto updateMemberDto,@AuthenticationPrincipal PrincipalDetails principal) {
+     memberService.updateMemberInfo(principal.getMember().getId(),updateMemberDto);
+        return responseService.getSuccessResult();
     }
- */
+
+    @GetMapping("/members/me")
+    public Result getMyInfo(@AuthenticationPrincipal PrincipalDetails principal) {
+        Member m=principal.getMember();
+        ResponseMyInfo responseMyInfo=new ResponseMyInfo(m.getLoginid(),m.getName(),m.getNickname(),m.getSignUpDate());
+        return responseService.getSingleResult(responseMyInfo);
+    }
+
 
 }

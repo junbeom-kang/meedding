@@ -1,10 +1,15 @@
 package video.meedding.Meedding.service;
 
 import org.springframework.stereotype.Service;
+import video.meedding.Meedding.dto.response.ListResult;
+import video.meedding.Meedding.dto.response.Result;
+import video.meedding.Meedding.dto.response.SingleResult;
+
+import java.util.List;
 
 @Service
 public class ResponseService {
-/*
+
     public <T> SingleResult<T> getSingleResult(T data) {
         SingleResult<T> result = new SingleResult<>();
         result.setData(data);
@@ -46,7 +51,4 @@ public class ResponseService {
         result.setCode(0);
         result.setMsg("success");
     }
-}
-
- */
 }

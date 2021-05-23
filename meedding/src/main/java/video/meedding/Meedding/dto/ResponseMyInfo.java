@@ -4,12 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
+import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateRoomDto {
-    @NotBlank
-    private String title;
+public class ResponseMyInfo {
+    private String email;
+    private String name;
+    private String nickName;
+    private LocalDate date;
 }

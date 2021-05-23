@@ -22,8 +22,8 @@ public class MessageService {
     private final MessageRepository messageRepository;
 
     @Transactional
-    public Long Message(CreateMessageDto createMessageDto) {
-        Member sentM = memberRepository.findById(createMessageDto.getSentMemberId()).orElseThrow(()->new NoMemberException());
+    public Long Message(Long id,CreateMessageDto createMessageDto) {
+        Member sentM = memberRepository.findById(id).orElseThrow(()->new NoMemberException());
         Member receivedM = memberRepository.findById(createMessageDto.getReceivedMemberId()).orElseThrow(()->new NoMemberException());
         Message message = Message.createMessage(sentM, receivedM, createMessageDto.getTitle(), createMessageDto.getContents());
         Message save = messageRepository.save(message);

@@ -47,6 +47,9 @@ public class RoomService {
     public Room findById(Long id) {
         return roomRepository.findById(id).orElseThrow(() -> new NoMatchingRoomException("해당 방이 없습니다"));
     }
+    public Room findByTitle(String title) {
+        return roomRepository.findByRoomTitle(title).orElseThrow(() -> new NoMatchingRoomException("일치하는 방이 없습니다."));
+    }
 
 
 
