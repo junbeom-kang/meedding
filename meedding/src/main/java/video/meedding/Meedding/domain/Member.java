@@ -9,6 +9,8 @@ import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Entity
@@ -38,8 +40,7 @@ public class Member {
     private List<Message> sentMessage;
     private String token;
 
-    @Enumerated(EnumType.STRING)
-    private Role role;
+    private String roles;
 
     public static Member createMember(String name, String nickname, String loginid, String password) {
         Member member=new Member();
@@ -48,10 +49,15 @@ public class Member {
         member.loginid = loginid;
         member.password = password;
         member.signUpDate=LocalDate.now();
-        member.role= Role.ROLE_GUEST;
+        member.roles= "ROLE_USER";
         return member;
     }
-
+    public List<String> getRoleList(){
+        if(this.roles.length() > 0){
+            return Arrays.asList(this.roles.split(","));
+        }
+        return new ArrayList<>();
+    }
     public void setName(String name) {
         this.name = name;
     }

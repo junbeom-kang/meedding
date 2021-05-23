@@ -1,14 +1,18 @@
 package video.meedding.Meedding.config.auth;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import video.meedding.Meedding.domain.Member;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 @Data
+@Getter
 public class PrincipalDetails implements UserDetails {
     private Member member;
     public PrincipalDetails(Member member) {
@@ -17,14 +21,13 @@ public class PrincipalDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        Collection<GrantedAuthority> collect = new ArrayList<>();
-        collect.add(new GrantedAuthority() {
-            @Override
-            public String getAuthority() {
-                return member.getRole().toString();
-            }
+        Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+        System.out.println(member.getRoleList().get(0));
+        member.getRoleList().forEach(r -> {
+            authorities.add(()->{return r;});
         });
-        return collect;
+        System.out.println(authorities);
+        return authorities;
     }
 
 

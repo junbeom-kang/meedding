@@ -4,7 +4,9 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.sql.Update;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import video.meedding.Meedding.config.auth.PrincipalDetails;
 import video.meedding.Meedding.domain.Member;
 import video.meedding.Meedding.dto.CreateMemberDto;
 import video.meedding.Meedding.dto.ResponseMemberDto;
@@ -22,6 +24,15 @@ import java.util.stream.Collectors;
 public class MemberController {
     private final MemberService memberService;
 
+    @GetMapping("/v1/user")
+    public String user(Authentication authentication) {
+        PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
+        System.out.println("principal : "+principal.getMember().getId());
+        System.out.println("principal : "+principal.getMember().getLoginid());
+        System.out.println("principal : "+principal.getMember().getPassword());
+
+        return "<h1>user</h1>";
+    }
     @GetMapping("/members")
     public Result getMemberList() {
         List<Member> allMember = memberService.getAllMember();
@@ -32,10 +43,12 @@ public class MemberController {
     }
 
     @PostMapping("/members")
-    public Result memberJoin(@RequestBody @Valid CreateMemberDto createMemberDto) {
+    public Result memberJoin(@RequestBody CreateMemberDto createMemberDto) {
+        System.out.println("들어왔읍");
         memberService.join(createMemberDto);
         return new Result<Integer>(HttpStatus.OK.value());
     }
+
 
     @GetMapping("/members/{id}")
     public Result getIdMember(@PathVariable Long id) {
