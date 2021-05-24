@@ -12,7 +12,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access= AccessLevel.PROTECTED)
 public class Friend {
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="friend_id")
     private Long id;
 
