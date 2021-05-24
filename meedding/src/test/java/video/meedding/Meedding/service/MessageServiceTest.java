@@ -76,11 +76,11 @@ class MessageServiceTest {
         Long sentId = memberService.join(new CreateMemberDto("snet@n.c", "sample", "sample", "sent", "sentNick"));
         Long receiveId = memberService.join(new CreateMemberDto("receive@n.c", "sample", "sample", "receive", "receiveNick"));
         Long thirdId = memberService.join(new CreateMemberDto("abcd@n.c", "sample", "sample", "sammple", "thirdMember"));
-        CreateMessageDto createMessageDto = new CreateMessageDto(sentId, receiveId, "메시지 테스트", "메시지 테스트 내용입니다");
-        CreateMessageDto createMessageDto1=new CreateMessageDto(sentId,thirdId,"1-3메시지 테스트","1-3메시지 테스트 내용");
+        CreateMessageDto createMessageDto = new CreateMessageDto( receiveId, "메시지 테스트", "메시지 테스트 내용입니다");
+        CreateMessageDto createMessageDto1=new CreateMessageDto(thirdId,"1-3메시지 테스트","1-3메시지 테스트 내용");
 
-        Long messageId = messageService.Message(createMessageDto);
-        Long messageId1 = messageService.Message(createMessageDto1);
+        Long messageId = messageService.Message(sentId,createMessageDto);
+        Long messageId1 = messageService.Message(sentId,createMessageDto1);
         return new Long[]{messageId,messageId1,sentId,receiveId,thirdId};
     }
 
