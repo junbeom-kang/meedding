@@ -123,6 +123,7 @@ class MemberServiceTest {
         //then
         assertThat(e.getMessage()).isEqualTo("존재하는 닉네임입니다");
     }
+    /*
     @Test
     public void 패스워드_변경_테스트() throws Exception {
         //given
@@ -156,5 +157,6 @@ class MemberServiceTest {
 
 
     }
+    */
 
 }

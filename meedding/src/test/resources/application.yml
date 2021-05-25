@@ -1,15 +1,15 @@
 spring:
-  datasource:
-    url: jdbc:mariadb://h2:tcp://localhost/~/jpashop
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
+  #datasource:
+    #url: jdbc:mariadb://h2:tcp://localhost/~/jpashop
+    #username: sa
+    #password:
+    #driver-class-name: org.h2.Driver
     #이렇게하면 히카리가 커넥션풀같은걸 다 해줌
-  jpa:
-    hibernate:
-      ddl-auto: create #자동으로 테이블 만들어주는 모드, 실행시점에 가지고있는 테이블을 지우고 다시생성
-    properties:
-      hibernate:
+  #jpa:
+    #hibernate:
+      #ddl-auto: create #자동으로 테이블 만들어주는 모드, 실행시점에 가지고있는 테이블을 지우고 다시생성
+    #properties:
+      #hibernate:
         #show_sql: true #systemout으로 보여주기때문에 안댐
         #format_sql: true
 logging.level:
