@@ -21,3 +21,4 @@ public class DuplicateFriendException extends RuntimeException{
         super(message, cause, enableSuppression, writableStackTrace);
     }
 }
+
