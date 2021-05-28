@@ -13,3 +13,4 @@ public class CreateRoomDto {
     @NotBlank
     private String title;
 }
+

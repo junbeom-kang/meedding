@@ -17,8 +17,7 @@ public class CorsConfig {
         config.addAllowedOrigin("*"); // e.g. http://domain1.com
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
-        System.out.println("g2d");
-        source.registerCorsConfiguration("/api/**", config);
+        source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
     }
 
