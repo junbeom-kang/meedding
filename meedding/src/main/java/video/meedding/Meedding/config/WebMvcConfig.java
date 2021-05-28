@@ -10,7 +10,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         System.out.println("수정됨1034");
         registry.addMapping("/**")
-                .allowedOrigins("*")
+                .allowedOrigins("/meedding.kro.kr,/localhost:3000,/localhost:8080,'*'")
                 .allowCredentials(true)
                 .allowedMethods("*")
                 .allowedHeaders("*");
