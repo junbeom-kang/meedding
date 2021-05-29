@@ -9,10 +9,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import video.meedding.Meedding.config.auth.PrincipalDetails;
 import video.meedding.Meedding.domain.Member;
-import video.meedding.Meedding.dto.CreateMemberDto;
-import video.meedding.Meedding.dto.ResponseMemberDto;
-import video.meedding.Meedding.dto.ResponseMyInfo;
-import video.meedding.Meedding.dto.UpdateMemberDto;
+import video.meedding.Meedding.dto.*;
 import video.meedding.Meedding.dto.response.Result;
 import video.meedding.Meedding.service.MemberService;
 import video.meedding.Meedding.service.ResponseService;
@@ -33,7 +30,7 @@ public class MemberController {
 
         List<Member> allMember = memberService.getAllMember();
         List<ResponseMemberDto> memberList = allMember.stream()
-                .map(m -> new ResponseMemberDto(m.getLoginid(), m.getName()))
+                .map(ResponseMemberDto::convertUserToDto)
                 .collect(Collectors.toList());
         return responseService.getListResult(memberList);
     }
@@ -48,13 +45,30 @@ public class MemberController {
     @GetMapping("/members/{id}")
     public Result getIdMember(@PathVariable Long id) {
         Member m = memberService.findMemberById(id);
-        return responseService.getSingleResult(new ResponseMemberDto(m.getLoginid(),m.getName()));
+        return responseService.getSingleResult(ResponseMemberDto.convertUserToDto(m));
     }
 
-    @PostMapping("members/update")
+    @PostMapping("/members/update")
     public Result updateMember(@RequestBody UpdateMemberDto updateMemberDto,@AuthenticationPrincipal PrincipalDetails principal) {
      memberService.updateMemberInfo(principal.getMember().getId(),updateMemberDto);
         return responseService.getSuccessResult();
+    }
+
+    @GetMapping("/members/name/{name}")
+    public Result readUserByName(@PathVariable String name) {
+        List<Member> memberByName = memberService.findMemberByName(name);
+        List<ResponseMemberDto> memberList = memberByName.stream()
+                .map(ResponseMemberDto::convertUserToDto)
+                .collect(Collectors.toList());
+        return responseService.getListResult(memberList);
+    }
+    @GetMapping("/members/nickname/{nickname}")
+    public Result readUserByNickname(@PathVariable String nickname) {
+        return responseService.getSingleResult(ResponseMemberDto.convertUserToDto(memberService.findMemberByNickName(nickname)));
+    }
+    @GetMapping("/members/email/{email}")
+    public Result readUserByLogin_id(@PathVariable String email) {
+        return responseService.getSingleResult(ResponseMemberDto.convertUserToDto(memberService.findMemberByLoginId(email)));
     }
 
     @GetMapping("/members/me")

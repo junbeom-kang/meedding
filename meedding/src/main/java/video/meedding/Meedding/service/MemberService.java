@@ -39,14 +39,17 @@ public class MemberService {
     public List<Member> getAllMember() {
         return memberRepository.findAll();
     }
-    public Member findMemberByName(String name) {
-        return memberRepository.findByName(name).orElseThrow(()->new NoMemberException("해당 회원이 없습니다"));
+    public List<Member> findMemberByName(String name) {
+        return memberRepository.findByName(name);
     }
     public Member findMemberByNickName(String nickname) {
         return memberRepository.findByNickname(nickname).orElseThrow(()->new NoMemberException("해당 회원이 없습니다"));
     }
     public Member findMemberById(Long id) {
         return memberRepository.findById(id).orElseThrow(()->new NoMemberException("해당 회원이 없습니다"));
+    }
+    public Member findMemberByLoginId(String Login_id) {
+        return memberRepository.findByLoginid(Login_id).orElseThrow(() -> new NoMemberException("해당 회원이 없습니다"));
     }
     @Transactional
     public void updateMemberInfo(Long id, UpdateMemberDto updateMemberDto) {
