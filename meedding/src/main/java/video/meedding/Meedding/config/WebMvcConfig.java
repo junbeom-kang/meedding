@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        System.out.println("수정됨0330");
+        System.out.println("수정됨0406");
         registry.addMapping("/**")
                 .allowedOrigins("https://meedding.kro.kr")
                 .allowCredentials(true)
