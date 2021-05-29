@@ -29,11 +29,11 @@ public class FriendController {
     }
 
 
-    @GetMapping("friends")
+    @GetMapping("/friends")
     public Result friendList(@AuthenticationPrincipal PrincipalDetails principal) {
         List<Friend> friends = friendService.addFriendList(principal.getMember().getId());
         List<FriendResponseDto> friend=friends.stream()
-                .map(m->new FriendResponseDto(m.getTargetMember().getLoginid(),m.getTargetMember().getName()))
+                .map(m->new FriendResponseDto(m.getId(),m.getTargetMember().getLoginid(),m.getTargetMember().getName()))
                 .collect(Collectors.toList());
         return responseService.getListResult(friend);
     }
