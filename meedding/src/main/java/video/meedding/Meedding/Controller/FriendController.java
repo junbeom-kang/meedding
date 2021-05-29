@@ -33,11 +33,9 @@ public class FriendController {
     public Result friendList(@AuthenticationPrincipal PrincipalDetails principal) {
         List<Friend> friends = friendService.addFriendList(principal.getMember().getId());
         List<FriendResponseDto> friend=friends.stream()
-                .map(m->new FriendResponseDto(m.getId(),m.getTargetMember().getLoginid(),m.getTargetMember().getName()))
+                .map(FriendResponseDto::ConvertToDto)
                 .collect(Collectors.toList());
         return responseService.getListResult(friend);
     }
-
-
 
 }
