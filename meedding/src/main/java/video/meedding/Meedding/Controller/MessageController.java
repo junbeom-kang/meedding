@@ -34,10 +34,7 @@ public class MessageController {
     public Result sentMessages(@AuthenticationPrincipal PrincipalDetails principal) {
         List<Message> bySentMember = messageService.findBySentMember(principal.getMember());
         List<MessageResponseDto> result=bySentMember.stream()
-                .map(m->new MessageResponseDto(
-                        principal.getMember().getName(),
-                        m.getReceivedMember().getName(),
-                        m.getTitle(),m.getContents())).
+                .map(MessageResponseDto::covertMessageDto).
                         collect(Collectors.toList());
         return responseService.getListResult(result);
     }
@@ -46,11 +43,8 @@ public class MessageController {
     public Result receivedMessages(@AuthenticationPrincipal PrincipalDetails principal) {
         List<Message> byReceivedMember = messageService.findByReceivedMember(principal.getMember());
         List<MessageResponseDto> result=byReceivedMember.stream()
-                .map(m->new MessageResponseDto(
-                        m.getSentMember().getName(),
-                        principal.getMember().getName(),
-                        m.getTitle(),m.getContents())).
-                        collect(Collectors.toList());
+                .map(MessageResponseDto::covertMessageDto).
+                collect(Collectors.toList());
         return responseService.getListResult(result);
     }
 
@@ -58,7 +52,7 @@ public class MessageController {
     @GetMapping("/message/{id}")
     public Result readMessage(@PathVariable Long id) {
         Message message = messageService.findByMessageId(id);
-        MessageResponseDto messageResponseDto=new MessageResponseDto(message.getSentMember().getName(),
+        MessageResponseDto messageResponseDto=new MessageResponseDto(message.getId(),message.getSentMember().getName(),
                 message.getReceivedMember().getName(),message.getTitle(), message.getContents());
         return responseService.getSingleResult(messageResponseDto);
     }
