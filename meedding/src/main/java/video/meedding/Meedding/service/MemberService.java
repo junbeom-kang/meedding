@@ -67,12 +67,16 @@ public class MemberService {
     @Transactional
     public void updatePassword(Long id, ChangePasswordDto changePasswordDto) {
         Member member = memberRepository.findById(id).orElseThrow(()->new NoMemberException("해당 회원이 없습니다"));
-        if (!member.getPassword().equals(changePasswordDto.getOldPassword())) {
+        String oldPW = bCryptPasswordEncoder.encode(changePasswordDto.getOldPassword());
+        String newPW =bCryptPasswordEncoder.encode(changePasswordDto.getNewPassword());
+        System.out.println(member.getPassword());
+        System.out.println(oldPW);
+        if (!member.getPassword().equals(oldPW)) {
             throw new PasswordDiffException("기존 패스워드가 일치하지 않습니다");
-        } else if (member.getPassword().equals(changePasswordDto.getNewPassword())) {
+        } else if (member.getPassword().equals(newPW)) {
             throw new SamePasswordException("패스워드가 이전 패스워드와 동일합니다");
         }
-        member.setPassword(changePasswordDto.getNewPassword());
+        member.setPassword(newPW);
     }
 
 

@@ -49,8 +49,8 @@ public class MemberController {
     }
 
     @PostMapping("/members/update")
-    public Result updateMember(@RequestBody UpdateMemberDto updateMemberDto,@AuthenticationPrincipal PrincipalDetails principal) {
-     memberService.updateMemberInfo(principal.getMember().getId(),updateMemberDto);
+    public Result updateMember(@RequestBody UpdateMemberDto updateMemberDto, @AuthenticationPrincipal PrincipalDetails principal) {
+        memberService.updateMemberInfo(principal.getMember().getId(), updateMemberDto);
         return responseService.getSuccessResult();
     }
 
@@ -62,10 +62,12 @@ public class MemberController {
                 .collect(Collectors.toList());
         return responseService.getListResult(memberList);
     }
+
     @GetMapping("/members/nickname/{nickname}")
     public Result readUserByNickname(@PathVariable String nickname) {
         return responseService.getSingleResult(ResponseMemberDto.convertUserToDto(memberService.findMemberByNickName(nickname)));
     }
+
     @GetMapping("/members/email/{email}")
     public Result readUserByLogin_id(@PathVariable String email) {
         return responseService.getSingleResult(ResponseMemberDto.convertUserToDto(memberService.findMemberByLoginId(email)));
@@ -73,10 +75,14 @@ public class MemberController {
 
     @GetMapping("/members/me")
     public Result getMyInfo(@AuthenticationPrincipal PrincipalDetails principal) {
-        Member m=principal.getMember();
-        ResponseMyInfo responseMyInfo=new ResponseMyInfo(m.getLoginid(),m.getName(),m.getNickname(),m.getSignUpDate());
+        Member m = principal.getMember();
+        ResponseMyInfo responseMyInfo = new ResponseMyInfo(m.getLoginid(), m.getName(), m.getNickname(), m.getSignUpDate());
         return responseService.getSingleResult(responseMyInfo);
     }
 
-
+    @PostMapping("/members/changePassword")
+    public Result changePW(@AuthenticationPrincipal PrincipalDetails principal, @RequestBody ChangePasswordDto changePasswordDto) {
+        memberService.updatePassword(principal.getMember().getId(),changePasswordDto);
+        return responseService.getSuccessResult();
+    }
 }

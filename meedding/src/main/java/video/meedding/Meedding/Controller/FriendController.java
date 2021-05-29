@@ -37,5 +37,10 @@ public class FriendController {
                 .collect(Collectors.toList());
         return responseService.getListResult(friend);
     }
+    @PostMapping("/friends/delete/{id}")
+    public Result deleteFriend(@AuthenticationPrincipal PrincipalDetails principal,@PathVariable Long id) {
+        friendService.removeFriend(principal.getMember().getId(),id);
+        return responseService.getSuccessResult();
+    }
 
 }
