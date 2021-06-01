@@ -35,7 +35,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public Authentication attemptAuthentication(@RequestBody HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException {
 
-        System.out.println("JwtAuthenticationFilter : 진입");
         // request에 있는 username과 password를 파싱해서 자바 Object로 받기
         ObjectMapper om = new ObjectMapper();
         LoginRequestDto loginRequestDto = null;
@@ -45,7 +44,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             e.printStackTrace();
         }
 
-        System.out.println("JwtAuthenticationFilter : "+loginRequestDto);
 
         // 유저네임패스워드 토큰 생성
         UsernamePasswordAuthenticationToken authenticationToken =
@@ -70,9 +68,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         PrincipalDetails principalDetailis = (PrincipalDetails) authentication.getPrincipal();
         System.out.println("Authentication : "+principalDetailis.getMember().getLoginid());
-        System.out.println("Authentication : "+principalDetailis.getMember().getId());
-        System.out.println("Authentication : "+principalDetailis.getMember().getRoles());
-
 
         return authentication;
     }

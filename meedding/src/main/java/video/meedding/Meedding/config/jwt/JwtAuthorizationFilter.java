@@ -37,7 +37,6 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         }
         System.out.println("들어옴1");
 
-        System.out.println("header : "+header);
         String token = request.getHeader(JwtProperties.HEADER_STRING)
                 .replace(JwtProperties.TOKEN_PREFIX, "");
         System.out.println(token);

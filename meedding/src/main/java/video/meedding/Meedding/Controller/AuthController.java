@@ -24,7 +24,6 @@ public class AuthController {
     @GetMapping("api/auth/kakao/callback")
     public Result kakaoTokenCallBack(String code) {
         OAuthToken token = authService.getTokenInfo(code);
-        System.out.println("절반성공");
         String jwt = authService.getProfile(token);
         return responseService.getSingleResult(jwt);
 
