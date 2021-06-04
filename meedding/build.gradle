@@ -22,11 +22,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.5.6'
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-devtools'
-	implementation 'com.google.code.gson:gson'
 	implementation 'org.projectlombok:lombok:'
-	implementation 'com.auth0:java-jwt:3.16.0'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.mariadb.jdbc:mariadb-java-client'
 	compileOnly 'org.projectlombok:lombok:1.18.20'
@@ -35,6 +32,17 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
+
+	//jwt
+	implementation 'com.auth0:java-jwt:3.16.0'
+	// gson
+	implementation 'com.google.code.gson:gson'
+	//validation
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+
+
+
 }
 
 test {
