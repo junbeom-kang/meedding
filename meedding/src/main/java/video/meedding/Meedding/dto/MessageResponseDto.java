@@ -7,7 +7,6 @@ import video.meedding.Meedding.domain.Message;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 public class MessageResponseDto {
     private Long id;
     private String writer;
