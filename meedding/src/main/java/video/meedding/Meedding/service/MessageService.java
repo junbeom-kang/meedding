@@ -33,7 +33,7 @@ public class MessageService {
         return messageRepository.findById(id).orElseThrow(()->new NoMessageException("없는 메시지입니다"));
     }
     public List<Message> findBySentMember(Member member) {
-        return messageRepository.findBySentMember(member);
+        return messageRepository.findBySentMember(member.getId());
     }
 
     public List<Message> findByReceivedMember(Member member) {
