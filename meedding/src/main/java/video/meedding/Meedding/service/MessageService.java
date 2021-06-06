@@ -37,7 +37,7 @@ public class MessageService {
     }
 
     public List<Message> findByReceivedMember(Member member) {
-        return messageRepository.findByReceivedMember(member);
+        return messageRepository.findByReceivedMember(member.getId());
     }
     @Transactional
     public void deleteMessage(Message message) {
