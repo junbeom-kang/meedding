@@ -42,13 +42,12 @@ public class FriendService {
     }
     //추가한 친구 목록
     public List<Friend> addFriendList(Long myId) {
-        Member result = memberRepository.findById(myId).orElseThrow(() -> new NoMemberException("없는 회원입니다"));
-        return friendRepository.findByAddMember(result);
+        //Member result = memberRepository.findById(myId).orElseThrow(() -> new NoMemberException("없는 회원입니다"));
+        return friendRepository.findByAddMember(myId);
     }
     //회원을 친구로 추가된 친구 목록
     public List<Friend> targetFriend(Long myId) {
-        Member member = memberRepository.getOne(myId);
-        return friendRepository.findByTargetMember(member);
+        return friendRepository.findByTargetMember(myId);
     }
 
     //친구삭제
