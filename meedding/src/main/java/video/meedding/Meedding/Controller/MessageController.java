@@ -1,14 +1,12 @@
 package video.meedding.Meedding.Controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import video.meedding.Meedding.config.auth.PrincipalDetails;
 import video.meedding.Meedding.domain.Message;
 import video.meedding.Meedding.dto.CreateMessageDto;
 import video.meedding.Meedding.dto.MessageResponseDto;
-import video.meedding.Meedding.dto.ResponseMemberDto;
 import video.meedding.Meedding.dto.response.Result;
 import video.meedding.Meedding.service.MessageService;
 import video.meedding.Meedding.service.ResponseService;

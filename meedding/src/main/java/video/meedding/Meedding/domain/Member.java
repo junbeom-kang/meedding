@@ -34,10 +34,10 @@ public class Member {
     private LocalDate signUpDate;
 
     @OneToMany(mappedBy = "receivedMember",cascade = CascadeType.ALL)
-    private List<Message> receivedMessage;
+    private List<Message> receivedMessage=new ArrayList<>();
 
     @OneToMany(mappedBy = "sentMember",cascade = CascadeType.ALL)
-    private List<Message> sentMessage;
+    private List<Message> sentMessage=new ArrayList<>();
     private String token;
 
     private String roles;

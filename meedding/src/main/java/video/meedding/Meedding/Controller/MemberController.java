@@ -1,10 +1,6 @@
 package video.meedding.Meedding.Controller;
 
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.sql.Update;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import video.meedding.Meedding.config.auth.PrincipalDetails;
@@ -14,7 +10,6 @@ import video.meedding.Meedding.dto.response.Result;
 import video.meedding.Meedding.service.MemberService;
 import video.meedding.Meedding.service.ResponseService;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -75,7 +70,9 @@ public class MemberController {
 
     @GetMapping("/members/me")
     public Result getMyInfo(@AuthenticationPrincipal PrincipalDetails principal) {
-        Member m = principal.getMember();
+        Member m = principal.getMember();//트랜잭션이 따라서 LAZY에서 초기화도 못함
+        memberService.findMemberById(9L);
+        memberService.findMemberByLoginId("kgood1@mju.ac.kr");
         ResponseMyInfo responseMyInfo = new ResponseMyInfo(m.getLoginid(), m.getName(), m.getNickname(), m.getSignUpDate());
         return responseService.getSingleResult(responseMyInfo);
     }

@@ -13,7 +13,6 @@ import video.meedding.Meedding.repository.FriendRepository;
 import video.meedding.Meedding.repository.MemberRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor

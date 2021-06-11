@@ -1,7 +1,6 @@
 package video.meedding.Meedding.Controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import video.meedding.Meedding.config.auth.PrincipalDetails;
@@ -11,7 +10,6 @@ import video.meedding.Meedding.dto.RoomNumberDto;
 import video.meedding.Meedding.dto.RoomResponseDto;
 import video.meedding.Meedding.dto.RoomTitleRequestDto;
 import video.meedding.Meedding.dto.response.Result;
-import video.meedding.Meedding.service.MemberService;
 import video.meedding.Meedding.service.ResponseService;
 import video.meedding.Meedding.service.RoomService;
 

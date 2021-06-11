@@ -26,6 +26,8 @@ public class MessageService {
         Member sentM = memberRepository.findById(id).orElseThrow(()->new NoMemberException());
         Member receivedM = memberRepository.findById(createMessageDto.getReceivedMemberId()).orElseThrow(()->new NoMemberException());
         Message message = Message.createMessage(sentM, receivedM, createMessageDto.getTitle(), createMessageDto.getContents());
+        message.setSentMember(sentM);
+        message.setReceivedMember(receivedM);
         Message save = messageRepository.save(message);
         return save.getId();
     }
