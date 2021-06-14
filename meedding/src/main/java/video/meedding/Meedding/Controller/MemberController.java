@@ -82,4 +82,5 @@ public class MemberController {
         memberService.updatePassword(principal.getMember().getId(),changePasswordDto);
         return responseService.getSuccessResult();
     }
+
 }

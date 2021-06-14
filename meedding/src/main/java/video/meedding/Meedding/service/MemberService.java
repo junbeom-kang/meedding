@@ -34,10 +34,11 @@ public class MemberService {
         createMemberDto.setPassword(bCryptPasswordEncoder.encode(createMemberDto.getPassword()));
         Member save = memberRepository.save(Member.createMember(createMemberDto.getName(), createMemberDto.getNickname(), createMemberDto.getEmail(), createMemberDto.getPassword()));
         return save.getId();
+
     }
 
     public List<Member> getAllMember() {
-        return memberRepository.findAll();
+        return memberRepository.test();
     }
     public List<Member> findMemberByName(String name) {
         return memberRepository.findByName(name);

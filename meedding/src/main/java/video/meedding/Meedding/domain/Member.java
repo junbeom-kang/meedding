@@ -1,6 +1,7 @@
 package video.meedding.Meedding.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,10 +33,8 @@ public class Member {
 
     private String password;
     private LocalDate signUpDate;
-
     @OneToMany(mappedBy = "receivedMember",cascade = CascadeType.ALL)
     private List<Message> receivedMessage=new ArrayList<>();
-
     @OneToMany(mappedBy = "sentMember",cascade = CascadeType.ALL)
     private List<Message> sentMessage=new ArrayList<>();
     private String token;
