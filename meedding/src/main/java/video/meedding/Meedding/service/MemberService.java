@@ -38,7 +38,7 @@ public class MemberService {
     }
 
     public List<Member> getAllMember() {
-        return memberRepository.test();
+        return memberRepository.findAll();
     }
     public List<Member> findMemberByName(String name) {
         return memberRepository.findByName(name);
