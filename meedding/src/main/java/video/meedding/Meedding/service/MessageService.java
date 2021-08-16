@@ -45,4 +45,5 @@ public class MessageService {
     public void deleteMessage(Message message) {
         messageRepository.delete(message);
     }
+
 }

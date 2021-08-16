@@ -1,5 +1,7 @@
 package video.meedding.Meedding.Controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -12,14 +14,14 @@ import video.meedding.Meedding.service.ResponseService;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
+@Api(tags="1. Member")
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
 public class MemberController {
     private final MemberService memberService;
     private final ResponseService responseService;
-
+    @ApiOperation(value="모든 회원 조회",notes ="모든 회원을 조회한다")
     @GetMapping("/members")
     public Result getMemberList() {
 

@@ -17,6 +17,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+
 @SpringBootTest
 @Transactional()
 class FriendServiceTest {
@@ -42,7 +43,6 @@ class FriendServiceTest {
     public void 회원으로_조회_테스트() throws Exception {
         //given
         Long id[]=createMember();
-
         //when
         Long relation1 = friendService.makeFriend(id[0], id[1]);
         Long relation2 = friendService.makeFriend(id[0], id[2]);
