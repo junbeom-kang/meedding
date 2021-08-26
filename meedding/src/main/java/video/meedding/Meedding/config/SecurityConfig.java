@@ -21,7 +21,7 @@ import video.meedding.Meedding.repository.MemberRepository;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    //private final CorsConfig corsConfig;
+    private final CorsConfig corsConfig;
     private final MemberRepository memberRepository;
     @Bean
     @Override
@@ -37,6 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .addFilter(corsConfig.corsFilter())
                 .cors().and()
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
