@@ -73,8 +73,6 @@ public class MemberController {
     @GetMapping("/members/me")
     public Result getMyInfo(@AuthenticationPrincipal PrincipalDetails principal) {
         Member m = principal.getMember();//트랜잭션이 따라서 LAZY에서 초기화도 못함
-        memberService.findMemberById(9L);
-        memberService.findMemberByLoginId("kgood1@mju.ac.kr");
         ResponseMyInfo responseMyInfo = new ResponseMyInfo(m.getLoginid(), m.getName(), m.getNickname(), m.getSignUpDate());
         return responseService.getSingleResult(responseMyInfo);
     }

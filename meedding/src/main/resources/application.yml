@@ -25,3 +25,7 @@ kakao:
   clientId: 9ab70c68899154e1060b5e2979b54d92
   redirectUri: https://meedding.kro.kr/api/auth/kakao/callback
 cosKey: cos1234
+
+openvidu:
+  url: https://meedding-openvidu.kro.kr/
+  secret: MY_SECRET
