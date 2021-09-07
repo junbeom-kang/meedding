@@ -76,6 +76,14 @@ public class MemberService {
         }
         member.setPassword(bCryptPasswordEncoder.encode(changePasswordDto.getNewPassword()));
     }
+    @Transactional
+    public void deleteMember(Long member_id,String password) {
+        Member member = memberRepository.findById(member_id).orElseThrow(NoMemberException::new);
+        if (!bCryptPasswordEncoder.matches(password, member.getPassword())) {
+            throw new PasswordDiffException();
+        }
+        memberRepository.delete(member);
+    }
 
 
 }

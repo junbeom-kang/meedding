@@ -14,14 +14,16 @@ import video.meedding.Meedding.service.ResponseService;
 
 import java.util.List;
 import java.util.stream.Collectors;
-@Api(tags="1. Member")
+
+@Api(tags = "1. Member")
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
 public class MemberController {
     private final MemberService memberService;
     private final ResponseService responseService;
-    @ApiOperation(value="모든 회원 조회",notes ="모든 회원을 조회한다")
+
+    @ApiOperation(value = "모든 회원 조회", notes = "모든 회원을 조회한다")
     @GetMapping("/members")
     public Result getMemberList() {
 
@@ -79,8 +81,13 @@ public class MemberController {
 
     @PostMapping("/members/changePassword")
     public Result changePW(@AuthenticationPrincipal PrincipalDetails principal, @RequestBody ChangePasswordDto changePasswordDto) {
-        memberService.updatePassword(principal.getMember().getId(),changePasswordDto);
+        memberService.updatePassword(principal.getMember().getId(), changePasswordDto);
         return responseService.getSuccessResult();
     }
 
+    @DeleteMapping("members/delete")
+    public Result deleteMember(@AuthenticationPrincipal PrincipalDetails principalDetails,@RequestParam("password")String password) {
+        memberService.deleteMember(principalDetails.getMember().getId(),password);
+        return responseService.getSuccessResult();
+    }
 }
