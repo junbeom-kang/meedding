@@ -1,11 +1,14 @@
 package video.meedding.Meedding.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.openvidu.java.client.Session;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -17,22 +20,26 @@ public class Room {
 
     private String roomTitle;
 
-    private String roomNumber;
-
     private String roomPassword;
+
+    private String session;
+
+    @OneToMany(mappedBy = "room",orphanRemoval = true)
+    private List<RoomParticipate> participateList=new ArrayList<>();
 
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name="member_id")
     private Member createMember;
 
+
     //생성 메서드
-    public static Room createRoom(Member member, String roomTitle, String roomNumber,String roomPassword) {
+    public static Room createRoom(Member member, String roomTitle, String roomPassword, Session session) {
         Room room=new Room();
         room.createMember=member;
         room.roomTitle=roomTitle;
-        room.roomNumber=roomNumber;
         room.roomPassword=roomPassword;
+        room.session=session.getSessionId();
         return room;
     }
 

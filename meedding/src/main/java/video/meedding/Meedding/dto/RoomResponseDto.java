@@ -8,4 +8,6 @@ import lombok.Data;
 public class RoomResponseDto {
     private Long id;
     private String title;
+    private String session;
+    private int peopleNum;
 }
