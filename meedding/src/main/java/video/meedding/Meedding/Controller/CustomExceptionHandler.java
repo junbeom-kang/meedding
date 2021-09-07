@@ -78,8 +78,26 @@ public class CustomExceptionHandler {
 
     @ExceptionHandler(NoMessageException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public Result defaultException() {
+    public Result NoMessageException() {
         return responseService.getFailResult(-1010, "없는 메시지입니다.");
+    }
+
+    @ExceptionHandler(RoomPasswordDiffException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Result RoomPasswordDiffException() {
+        return responseService.getFailResult(-1011, "방 비밀번호가 틀렸습니다.");
+    }
+
+    @ExceptionHandler(NoRoomCreatorException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Result NoRoomCreatorException() {
+        return responseService.getFailResult(-1012, "방을 만든사람이 아닙니다");
+    }
+
+    @ExceptionHandler(ExistedRoomNameException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Result ExistedRoomNameException() {
+        return responseService.getFailResult(-1013, "이미 존재하는 방제목입니다");
     }
 
 
