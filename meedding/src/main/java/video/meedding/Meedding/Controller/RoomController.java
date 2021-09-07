@@ -57,6 +57,11 @@ public class RoomController {
         roomService.deleteRoom(principalDetails.getMember().getId(),room_id);
         return responseService.getSuccessResult();
     }
+    @GetMapping("rooms/leave/{room_id}")
+    public Result leaveRoom(@AuthenticationPrincipal PrincipalDetails principalDetails,@PathVariable Long room_id,@RequestHeader("token")String token) throws OpenViduJavaClientException, OpenViduHttpException {
+        roomService.leaveSession(principalDetails.getMember().getId(),room_id,token);
+        return responseService.getSuccessResult();
+    }
 
 }
 

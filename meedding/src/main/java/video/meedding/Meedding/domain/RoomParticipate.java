@@ -27,9 +27,13 @@ public class RoomParticipate {
         RoomParticipate roomParticipate=new RoomParticipate();
         roomParticipate.token=token;
         roomParticipate.member=member;
-        roomParticipate.room=room;
+        roomParticipate.setRoom(room);
         return roomParticipate;
     }
 
-
+    //연관관계 메서드
+    public void setRoom(Room room) {
+        this.room=room;
+        room.getParticipateList().add(this);
+    }
 }

@@ -10,11 +10,10 @@ import video.meedding.Meedding.domain.RoomParticipate;
 import video.meedding.Meedding.dto.RoomDto;
 import video.meedding.Meedding.exception.*;
 import video.meedding.Meedding.repository.MemberRepository;
-import video.meedding.Meedding.repository.RoomParticipateRepository;
+import video.meedding.Meedding.repository.RoomParticipatorRepository;
 import video.meedding.Meedding.repository.RoomRepository;
 
 import java.util.List;
-import java.util.UUID;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -23,7 +22,7 @@ public class RoomService {
     private final RoomRepository roomRepository;
     private final MemberRepository memberRepository;
     private final OpenVidu openVidu;
-    private final RoomParticipateRepository roomParticipateRepository;
+    private final RoomParticipatorRepository roomParticipateRepository;
     @Transactional
     public String Room(Long memberId, RoomDto roomDto) throws OpenViduJavaClientException, OpenViduHttpException {
         if (roomRepository.findByRoomTitle(roomDto.getTitle()).isPresent()) {
@@ -33,6 +32,7 @@ public class RoomService {
         Session session = openVidu.createSession();
         Room room=Room.createRoom(member, roomDto.getTitle(), roomDto.getPassword(),session);
         Room result=roomRepository.save(room);
+        System.out.println(openVidu.getActiveSessions().size());
         return result.getSession();
     }
 
@@ -53,11 +53,11 @@ public class RoomService {
                 .filter(s -> s.getSessionId().equals(room.getSession()))
                 .findFirst()
                 .orElseThrow();
-        System.out.println(session);
         if (session == null) {
             throw new NoRoomSessionException();
         }
         String token = session.createConnection(connectionProperties).getToken();
+        System.out.println(session.getConnections().size());
         roomParticipateRepository.save(RoomParticipate.roomParticipate(token,participant,room));
         return token;
     }
@@ -81,6 +81,27 @@ public class RoomService {
     public Room findByTitle(String title) {
         return roomRepository.findByRoomTitle(title).orElseThrow(() -> new NoMatchingRoomException("일치하는 방이 없습니다."));
     }
+    @Transactional
+    public void leaveSession(Long member_id,Long room_id,String token) throws OpenViduJavaClientException, OpenViduHttpException {
+        Room room = roomRepository.findById(room_id).orElseThrow(NoSuchRoomException::new);
+        List<Session> activeSessions = openVidu.getActiveSessions();
+        Session session = activeSessions.stream()
+                .filter(s -> s.getSessionId().equals(room.getSession()))
+                .findFirst()
+                .orElseThrow();
+        List<Connection> activeConnections = session.getConnections();
+        Connection connection = activeConnections.stream()
+                .filter(s -> s.getToken().equals(token))
+                .findFirst()
+                .orElseThrow();
+        System.out.println(connection);
+        session.forceDisconnect(connection);
+        RoomParticipate roomParticipate = roomParticipateRepository.findRoomParticipateByMemberAndRoom(member_id, room_id).orElseThrow(NoSuchParticipatorException::new);
+        room.getParticipateList().remove(roomParticipate);
+        roomParticipateRepository.delete(roomParticipate);
+    }
+
+
 
 
 }

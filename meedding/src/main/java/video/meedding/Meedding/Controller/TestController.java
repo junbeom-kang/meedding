@@ -1,4 +1,5 @@
 package video.meedding.Meedding.Controller;
+import io.openvidu.java.client.OpenVidu;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,7 @@ import java.util.List;
 public class TestController {
     private final MemberService memberService;
     private final ResponseService responseService;
+    private final OpenVidu openVidu;
 
     @GetMapping("/home")
     public String home(@AuthenticationPrincipal PrincipalDetails principal) {
@@ -32,5 +34,17 @@ public class TestController {
     public Result TEST() {
         List<Member> allMember = memberService.getAllMember();
         return responseService.getSingleResult(allMember);
+    }
+
+    @GetMapping("/test/session")
+    public Result TEST1() {
+        System.out.println(openVidu.getActiveSessions());
+        return responseService.getSuccessResult();
+    }
+    @GetMapping("/test/session2")
+    public Result TEST2() {
+        System.out.println(openVidu.getActiveSessions());
+        System.out.println(openVidu.getActiveSessions().get(0).getConnections().get(0).getToken());
+        return responseService.getSuccessResult();
     }
 }

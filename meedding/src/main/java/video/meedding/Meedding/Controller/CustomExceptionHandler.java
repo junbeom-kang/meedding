@@ -100,5 +100,18 @@ public class CustomExceptionHandler {
         return responseService.getFailResult(-1013, "이미 존재하는 방제목입니다");
     }
 
+    @ExceptionHandler(NoSuchParticipatorException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Result NoSuchParticipatorException() {
+        return responseService.getFailResult(-1014, "없는 참가자 입니다");
+    }
+
+    @ExceptionHandler(NoRoomSessionException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Result NoRoomSessionException() {
+        return responseService.getFailResult(-1015, "없는 세션입니다");
+    }
+
+
 
 }
