@@ -20,10 +20,8 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'com.github.gavlykovskiy:p6spy-spring-boot-starter:1.5.6'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-devtools'
-	implementation 'org.projectlombok:lombok:'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.mariadb.jdbc:mariadb-java-client'
 	compileOnly 'org.projectlombok:lombok:1.18.20'
@@ -44,6 +42,7 @@ dependencies {
 	implementation 'io.springfox:springfox-swagger-ui:2.9.2'
 	//OpenVidu
 	implementation 'io.openvidu:openvidu-java-client:2.19.0'
+	implementation 'org.slf4j:slf4j-api:1.7.31'
 
 
 
