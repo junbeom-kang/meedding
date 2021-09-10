@@ -25,4 +25,4 @@ nginx를 통한 HTTPS 설정 및 리버스 프록시를 활용하여 CORS
 <br><br>
 ### 2021/09 분산 아키텍쳐로 변경
 구 아키텍쳐
-<img src="https://user-images.githubusercontent.com/59498625/132798206-39ccbd68-4883-48ef-8999-3bbb01a2f76d.png" width="80%" height="80%"
+<img src="https://user-images.githubusercontent.com/59498625/132798206-39ccbd68-4883-48ef-8999-3bbb01a2f76d.png" width="80%" height="80%">
