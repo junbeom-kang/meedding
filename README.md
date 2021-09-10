@@ -1,7 +1,9 @@
 #  meedding
 ###  WebRTC를 활용한 화상회의 웹 어플리케이션   
 # 서버 아키텍쳐
-<img src = "https://user-images.githubusercontent.com/59498625/132798147-a154f1c0-3a59-450f-8e6b-606eb246ef30.png" width="85%" height="850%">
+<img src = "https://user-images.githubusercontent.com/59498625/132798147-a154f1c0-3a59-450f-8e6b-606eb246ef30.png" width="85%" height="850%"><br>
+#### 분산 아키텍쳐로 서버 변경해보기 https://cantcoding.tistory.com/77
+
 P2P 화상회의 WebRTC open source API</br>
 Front end-Vue</br>
 Back end-Spring Boot</br>
