@@ -1,6 +1,6 @@
 #  meedding
 ###  WebRTC를 활용한 화상회의 웹 어플리케이션     
-<img src = "https://user-images.githubusercontent.com/59498625/121369458-d4e47d00-c976-11eb-88f5-1b55f6319538.png" width="100%" height="100%">
+<img src = "https://user-images.githubusercontent.com/59498625/132798147-a154f1c0-3a59-450f-8e6b-606eb246ef30.png" width="100%" height="100%">
 P2P 화상회의 WebRTC open source API</br>
 Front end-Vue</br>
 Back end-Spring Boot</br>
@@ -22,3 +22,7 @@ Back end-Spring Boot</br>
 
 ## 서버 설정
 nginx를 통한 HTTPS 설정 및 리버스 프록시를 활용하여 CORS
+<br><br>
+### 2021/09 분산 아키텍쳐로 변경
+구 아키텍쳐
+<img src="https://user-images.githubusercontent.com/59498625/132798206-39ccbd68-4883-48ef-8999-3bbb01a2f76d.png" width="80%" height="80%"
