@@ -23,12 +23,12 @@ public class Room {
     private String roomPassword;
 
     private String session;
-
+    private int peopleNum;
     @OneToMany(mappedBy = "room",orphanRemoval = true)
     private List<RoomParticipate> participateList=new ArrayList<>();
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="member_id")
     private Member createMember;
 
@@ -40,7 +40,14 @@ public class Room {
         room.roomTitle=roomTitle;
         room.roomPassword=roomPassword;
         room.session=session.getSessionId();
+        room.peopleNum=0;
         return room;
+    }
+    public void plusPeopleNum() {
+        this.peopleNum+=1;
+    }
+    public void minusPeopleNum() {
+        this.peopleNum-=1;
     }
 
 }

@@ -33,7 +33,6 @@ public class RoomService {
         Session session = openVidu.createSession();
         Room room=Room.createRoom(member, roomDto.getTitle(), roomDto.getPassword(),session);
         Room result=roomRepository.save(room);
-        System.out.println(openVidu.getActiveSessions().size());
         return result.getSession();
     }
 
@@ -58,8 +57,8 @@ public class RoomService {
             throw new NoRoomSessionException();
         }
         String token = session.createConnection(connectionProperties).getToken();
-        System.out.println(session.getConnections().size());
         roomParticipateRepository.save(RoomParticipate.roomParticipate(token,participant,room));
+        room.plusPeopleNum();
         return token;
     }
 
@@ -99,6 +98,7 @@ public class RoomService {
         session.forceDisconnect(connection);
         RoomParticipate roomParticipate = roomParticipateRepository.findRoomParticipateByMemberAndRoom(member_id, room_id).orElseThrow(NoSuchParticipatorException::new);
         room.getParticipateList().remove(roomParticipate);
+        room.minusPeopleNum();
         roomParticipateRepository.delete(roomParticipate);
     }
 

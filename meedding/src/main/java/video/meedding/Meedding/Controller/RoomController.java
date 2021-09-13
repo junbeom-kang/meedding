@@ -41,7 +41,7 @@ public class RoomController {
     public Result roomList() {
         List<Room> rooms = roomService.allRoom();
         List<RoomResponseDto> room = rooms.stream()
-                .map(m -> new RoomResponseDto(m.getId(), m.getRoomTitle(), m.getSession(), m.getParticipateList().size()))
+                .map(m -> new RoomResponseDto(m.getId(), m.getRoomTitle(), m.getSession(), m.getPeopleNum()))
                 .collect(Collectors.toList());
         return responseService.getListResult(room);
     }
