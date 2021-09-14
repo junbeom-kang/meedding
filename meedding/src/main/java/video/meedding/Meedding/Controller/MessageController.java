@@ -47,11 +47,9 @@ public class MessageController {
     }
 
 
-    @GetMapping("/message/{id}")
-    public Result readMessage(@PathVariable Long id) {
-        Message message = messageService.findByMessageId(id);
-        MessageResponseDto messageResponseDto=new MessageResponseDto(message.getId(),message.getSentMember().getName(),
-                message.getReceivedMember().getName(),message.getTitle(), message.getContents());
+    @GetMapping("/message/{message_id}")
+    public Result readMessage(@PathVariable Long message_id) {
+        MessageResponseDto messageResponseDto=messageService.findByMessageId(message_id);
         return responseService.getSingleResult(messageResponseDto);
     }
 }

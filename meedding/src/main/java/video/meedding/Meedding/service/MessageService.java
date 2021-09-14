@@ -3,9 +3,11 @@ package video.meedding.Meedding.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import springfox.documentation.service.ResponseMessage;
 import video.meedding.Meedding.domain.Member;
 import video.meedding.Meedding.domain.Message;
 import video.meedding.Meedding.dto.CreateMessageDto;
+import video.meedding.Meedding.dto.MessageResponseDto;
 import video.meedding.Meedding.exception.NoMemberException;
 import video.meedding.Meedding.exception.NoMessageException;
 import video.meedding.Meedding.repository.MemberRepository;
@@ -31,8 +33,9 @@ public class MessageService {
         Message save = messageRepository.save(message);
         return save.getId();
     }
-    public Message findByMessageId(Long id) {
-        return messageRepository.findById(id).orElseThrow(()->new NoMessageException("없는 메시지입니다"));
+    public MessageResponseDto findByMessageId(Long id) {
+        Message message = messageRepository.findById(id).orElseThrow(() -> new NoMessageException("없는 메시지입니다"));
+        return MessageResponseDto.covertMessageDto(message);
     }
     public List<Message> findBySentMember(Member member) {
         return messageRepository.findBySentMember(member.getId());
