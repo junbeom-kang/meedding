@@ -1,19 +1,21 @@
 spring:
-  datasource:
-    url: jdbc:mariadb://meedding.ctoilrrq7tkn.ap-northeast-2.rds.amazonaws.com/Meedding
-    username: junbeom_kang
-    password: wnsqja12
-    driver-class-name: org.mariadb.jdbc.Driver
-
   jpa:
+    datasource:
+      url: jdbc:mariadb://meedding.ctoilrrq7tkn.ap-northeast-2.rds.amazonaws.com/Meedding
+      username: junbeom_kang
+      password: wnsqja12
+      driver-class-name: org.mariadb.jdbc.Driver
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     properties:
       hibernate:
         show_sql: true
         format_sql: true
         default_batch_fetch_size: 100
     open-in-view: false
+  profiles:
+    include: security
+
 logging.level:
   web: debug
   org.hibernate.SQL: #debug

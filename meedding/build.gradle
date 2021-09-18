@@ -43,6 +43,8 @@ dependencies {
 	//OpenVidu
 	implementation 'io.openvidu:openvidu-java-client:2.19.0'
 	implementation 'org.slf4j:slf4j-api:1.7.31'
+	//Amazon S3
+	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.1.RELEASE'
 
 
 
