@@ -5,13 +5,16 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import video.meedding.Meedding.config.auth.PrincipalDetails;
 import video.meedding.Meedding.domain.Member;
 import video.meedding.Meedding.dto.*;
 import video.meedding.Meedding.dto.response.Result;
 import video.meedding.Meedding.service.MemberService;
 import video.meedding.Meedding.service.ResponseService;
+import video.meedding.Meedding.service.S3Uploader;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,6 +25,7 @@ import java.util.stream.Collectors;
 public class MemberController {
     private final MemberService memberService;
     private final ResponseService responseService;
+    private final S3Uploader s3Uploader;
 
     @ApiOperation(value = "모든 회원 조회", notes = "모든 회원을 조회한다")
     @GetMapping("/members")
@@ -74,7 +78,7 @@ public class MemberController {
 
     @GetMapping("/members/me")
     public Result getMyInfo(@AuthenticationPrincipal PrincipalDetails principal) {
-        Member m = principal.getMember();//트랜잭션이 따라서 LAZY에서 초기화도 못함
+        Member m = principal.getMember();
         ResponseMyInfo responseMyInfo = new ResponseMyInfo(m.getLoginid(), m.getName(), m.getNickname(), m.getSignUpDate());
         return responseService.getSingleResult(responseMyInfo);
     }
@@ -88,6 +92,12 @@ public class MemberController {
     @DeleteMapping("members/delete")
     public Result deleteMember(@AuthenticationPrincipal PrincipalDetails principalDetails,@RequestParam("password")String password) {
         memberService.deleteMember(principalDetails.getMember().getId(),password);
+        return responseService.getSuccessResult();
+    }
+    @PostMapping("members/profile")
+    public Result updateProfile(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestParam("image")MultipartFile multipartFile) throws IOException {
+        String url = s3Uploader.upload(multipartFile, "profile");
+        memberService.updateProfile(url,principalDetails.getMember().getId());
         return responseService.getSuccessResult();
     }
 }

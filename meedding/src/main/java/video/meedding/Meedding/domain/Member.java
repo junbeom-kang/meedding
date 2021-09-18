@@ -37,8 +37,7 @@ public class Member {
     private List<Message> receivedMessage=new ArrayList<>();
     @OneToMany(mappedBy = "sentMember",cascade = CascadeType.ALL)
     private List<Message> sentMessage=new ArrayList<>();
-    private String token;
-
+    private String image;
     private String roles;
 
     public static Member createMember(String name, String nickname, String loginid, String password) {
@@ -71,6 +70,8 @@ public class Member {
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
-
+    public void setImage(String url){
+        this.image=url;
+    }
 
 }

@@ -84,6 +84,12 @@ public class MemberService {
         }
         memberRepository.delete(member);
     }
+    @Transactional
+    public void updateProfile(String url,Long member_id) {
+        Member member = memberRepository.findById(member_id).orElseThrow(NoMemberException::new);
+        member.setImage(url);
+    }
+
 
 
 }
