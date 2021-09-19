@@ -24,6 +24,7 @@ import video.meedding.Meedding.dto.CreateMemberDto;
 import video.meedding.Meedding.dto.KakaoProfile;
 import video.meedding.Meedding.dto.LoginRequestDto;
 import video.meedding.Meedding.exception.KakaoCommunicationFailureException;
+import video.meedding.Meedding.exception.NoMemberException;
 import video.meedding.Meedding.model.OAuthToken;
 import video.meedding.Meedding.repository.MemberRepository;
 
@@ -99,6 +100,7 @@ public class AuthService {
         if (byLoginid.isEmpty()) {
             id = memberService.join(new CreateMemberDto(kakaoProfile.getKakao_account().getEmail(), cosKey, cosKey,
                     kakaoProfile.getProperties().getNickname(), "Kakao_" + kakaoProfile.getProperties().getNickname()));
+            memberRepository.findById(id).orElseThrow(NoMemberException::new).setImage(kakaoProfile.getProperties().getProfile_image());
         } else {
             id=byLoginid.get().getId();
         }
