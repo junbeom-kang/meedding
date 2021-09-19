@@ -6,8 +6,7 @@ spring:
       password: wnsqja12
       driver-class-name: org.mariadb.jdbc.Driver
     hibernate:
-      hbm2ddl:
-        ddl-auto: create
+      ddl-auto: create
     properties:
       hibernate:
         show_sql: true
