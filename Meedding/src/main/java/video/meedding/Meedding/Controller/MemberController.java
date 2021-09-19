@@ -79,7 +79,7 @@ public class MemberController {
     @GetMapping("/members/me")
     public Result getMyInfo(@AuthenticationPrincipal PrincipalDetails principal) {
         Member m = principal.getMember();
-        ResponseMyInfo responseMyInfo = new ResponseMyInfo(m.getLoginid(), m.getName(), m.getNickname(), m.getSignUpDate());
+        ResponseMyInfo responseMyInfo = new ResponseMyInfo(m.getLoginid(),m.getImage(), m.getName(), m.getNickname(), m.getSignUpDate());
         return responseService.getSingleResult(responseMyInfo);
     }
 

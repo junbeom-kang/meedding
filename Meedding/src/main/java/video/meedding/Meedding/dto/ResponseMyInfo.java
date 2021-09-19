@@ -11,6 +11,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class ResponseMyInfo {
     private String email;
+    private String image;
     private String name;
     private String nickName;
     private LocalDate date;
