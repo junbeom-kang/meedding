@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static video.meedding.Meedding.domain.Role.ROLE_USER;
+
 @Entity
 @Getter
 @NoArgsConstructor(access= AccessLevel.PROTECTED)
@@ -38,7 +40,7 @@ public class Member {
     @OneToMany(mappedBy = "sentMember",cascade = CascadeType.ALL)
     private List<Message> sentMessage=new ArrayList<>();
     private String image;
-    private String roles;
+    private Role role;
 
     public static Member createMember(String name, String nickname, String loginid, String password) {
         Member member=new Member();
@@ -47,14 +49,8 @@ public class Member {
         member.loginid = loginid;
         member.password = password;
         member.signUpDate=LocalDate.now();
-        member.roles= "ROLE_USER";
+        member.role= ROLE_USER;
         return member;
-    }
-    public List<String> getRoleList(){
-        if(this.roles.length() > 0){
-            return Arrays.asList(this.roles.split(","));
-        }
-        return new ArrayList<>();
     }
     public void setName(String name) {
         this.name = name;

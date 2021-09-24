@@ -4,12 +4,15 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import video.meedding.Meedding.config.auth.PrincipalDetails;
+import video.meedding.Meedding.config.jwt.JwtTokenProvider;
 import video.meedding.Meedding.domain.Member;
 import video.meedding.Meedding.dto.*;
 import video.meedding.Meedding.dto.response.Result;
+import video.meedding.Meedding.exception.PasswordDiffException;
 import video.meedding.Meedding.service.MemberService;
 import video.meedding.Meedding.service.ResponseService;
 import video.meedding.Meedding.service.S3Uploader;
@@ -26,6 +29,18 @@ public class MemberController {
     private final MemberService memberService;
     private final ResponseService responseService;
     private final S3Uploader s3Uploader;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final JwtTokenProvider jwtTokenProvider;
+
+    @PostMapping("/login")
+    public Result signIn(@RequestBody LoginRequestDto loginRequestDto) {
+        Member member = memberService.findMemberByLoginId(loginRequestDto.getUsername());
+        if (!bCryptPasswordEncoder.matches(loginRequestDto.getPassword(), member.getPassword()))
+            throw new PasswordDiffException();
+
+        return responseService.getSingleResult(jwtTokenProvider.createToken(String.valueOf(member.getId()), member.getRole()));
+
+    }
 
     @ApiOperation(value = "모든 회원 조회", notes = "모든 회원을 조회한다")
     @GetMapping("/members")

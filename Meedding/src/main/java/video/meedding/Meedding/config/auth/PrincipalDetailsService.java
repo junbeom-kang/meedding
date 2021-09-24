@@ -14,8 +14,8 @@ import video.meedding.Meedding.repository.MemberRepository;
 public class PrincipalDetailsService implements UserDetailsService {
     private final MemberRepository memberRepository;
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Member member = memberRepository.findByLoginid(username).orElseThrow(()->new NoMemberException());
-        return new PrincipalDetails(member);
+    public PrincipalDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        System.out.println(s);
+        return new PrincipalDetails(memberRepository.findById(Long.valueOf(s)).orElseThrow(NoMemberException::new));
     }
 }

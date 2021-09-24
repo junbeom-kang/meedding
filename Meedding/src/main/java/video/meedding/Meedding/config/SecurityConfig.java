@@ -1,32 +1,29 @@
 package video.meedding.Meedding.config;
 
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.filters.CorsFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Component;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import video.meedding.Meedding.config.jwt.JwtAuthenticationFilter;
-import video.meedding.Meedding.config.jwt.JwtAuthorizationFilter;
-import video.meedding.Meedding.repository.MemberRepository;
+import video.meedding.Meedding.config.jwt.JwtTokenProvider;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final CorsConfig corsConfig;
-    private final MemberRepository memberRepository;
-    @Bean
+    private final JwtTokenProvider jwtTokenProvider;
     @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/v2/api-docs", "/swagger-resources/**"
+                , "/swagger-ui.html", "/webjars/**", "/swagger/**");
     }
 
     @Bean
@@ -44,14 +41,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin().disable()
                 .httpBasic().disable()
-                .addFilter(new JwtAuthenticationFilter(authenticationManager()))
-                .addFilter(new JwtAuthorizationFilter(authenticationManager(), memberRepository))
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET,"/api/members/me","/api/members","/api/members/**","/api/friends","/api/message/**")
                 .access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
                 .antMatchers(HttpMethod.POST,"/api/members/update","/api/friends","/api/rooms","api/rooms/**","api/message","api/members/profile")
                 .access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-                .anyRequest().permitAll();
+                .anyRequest().permitAll()
+                .and()
+                //.exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler())
+                //.and()
+                //.exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint())
+                //.and()
+                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
     }
 }
 
