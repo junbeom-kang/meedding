@@ -40,6 +40,7 @@ public class Member {
     @OneToMany(mappedBy = "sentMember",cascade = CascadeType.ALL)
     private List<Message> sentMessage=new ArrayList<>();
     private String image;
+    @Enumerated(value = EnumType.STRING)
     private Role role;
 
     public static Member createMember(String name, String nickname, String loginid, String password) {
