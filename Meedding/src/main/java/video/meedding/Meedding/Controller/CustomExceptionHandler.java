@@ -112,6 +112,12 @@ public class CustomExceptionHandler {
         return responseService.getFailResult(-1015, "없는 세션입니다");
     }
 
+    @ExceptionHandler(NoSuchRoomException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Result NoSuchRoomException() {
+        return responseService.getFailResult(-1016, "없는 회의방입니다");
+    }
+
 
 
 }

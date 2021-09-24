@@ -9,3 +9,4 @@ public class NoSuchRoomException extends RuntimeException {
         super(message);
     }
 }
+
