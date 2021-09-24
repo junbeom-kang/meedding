@@ -11,6 +11,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         System.out.println("수정됨0320");
         registry.addMapping("/**")
                 .allowedOriginPatterns("*")//"https://meedding.kro.kr"
+                .exposedHeaders("authorization","Authorization")
                 .allowCredentials(true)
                 .allowedMethods("*")
                 .allowedHeaders("*");
