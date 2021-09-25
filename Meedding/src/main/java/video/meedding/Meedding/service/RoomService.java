@@ -3,11 +3,13 @@ package video.meedding.Meedding.service;
 import io.openvidu.java.client.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.Response;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import video.meedding.Meedding.domain.Member;
 import video.meedding.Meedding.domain.Room;
 import video.meedding.Meedding.domain.RoomParticipate;
+import video.meedding.Meedding.dto.ResponseRoomDto;
 import video.meedding.Meedding.dto.RoomDto;
 import video.meedding.Meedding.exception.*;
 import video.meedding.Meedding.repository.MemberRepository;
@@ -63,7 +65,7 @@ public class RoomService {
     }
 
     public List<Room> allRoom() {
-        return roomRepository.findAll();
+        return roomRepository.findAllByPeopleNum();
     }
 
     @Transactional
@@ -78,8 +80,9 @@ public class RoomService {
     public Room findById(Long id) {
         return roomRepository.findById(id).orElseThrow(() -> new NoMatchingRoomException("해당 방이 없습니다"));
     }
-    public Room findByTitle(String title) {
-        return roomRepository.findByRoomTitle(title).orElseThrow(() -> new NoMatchingRoomException("일치하는 방이 없습니다."));
+    public ResponseRoomDto findByTitle(String title) {
+        Room room = roomRepository.findByRoomTitle(title).orElseThrow(() -> new NoMatchingRoomException("일치하는 방이 없습니다."));
+        return ResponseRoomDto.convertToResponseRoomDto(room);
     }
     @Transactional
     public void leaveSession(Long member_id,Long room_id,String token) throws OpenViduJavaClientException, OpenViduHttpException {

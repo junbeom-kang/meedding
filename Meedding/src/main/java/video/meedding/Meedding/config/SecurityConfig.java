@@ -13,6 +13,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import video.meedding.Meedding.config.jwt.JwtAuthenticationFilter;
 import video.meedding.Meedding.config.jwt.JwtTokenProvider;
+import video.meedding.Meedding.config.security.CustomAccessDeniedHandler;
+import video.meedding.Meedding.config.security.CustomAuthenticationEntryPoint;
 
 @Configuration
 @EnableWebSecurity
@@ -47,10 +49,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //.access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
                 .anyRequest().permitAll()
                 .and()
-                //.exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler())
-                //.and()
-                //.exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint())
-                //.and()
+                .exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler())
+                .and()
+                .exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint())
+                .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
     }
 }

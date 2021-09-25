@@ -10,6 +10,7 @@ import video.meedding.Meedding.exception.*;
 import video.meedding.Meedding.service.ResponseService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.NoSuchElementException;
 
 @RequiredArgsConstructor
 @RestControllerAdvice
@@ -118,6 +119,22 @@ public class CustomExceptionHandler {
         return responseService.getFailResult(-1016, "없는 회의방입니다");
     }
 
+    @ExceptionHandler(AccessDeniedException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Result AccessDeniedException() {
+        return responseService.getFailResult(-1017, "해당 작업에 권한이 없습니다.");
+    }
+
+    @ExceptionHandler(AuthenticationEntryPointException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Result AuthenticationEntryPointException() {
+        return responseService.getFailResult(-1018, "인증정보가 유효하지 않습니다.");
+    }
+    @ExceptionHandler(NoSuchElementException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Result NoSuchElementException() {
+        return responseService.getFailResult(-1019, "세션이 종료되었습니다.");
+    }
 
 
 }

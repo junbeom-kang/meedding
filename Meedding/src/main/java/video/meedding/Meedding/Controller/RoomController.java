@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import video.meedding.Meedding.config.auth.PrincipalDetails;
 import video.meedding.Meedding.domain.Member;
 import video.meedding.Meedding.domain.Room;
+import video.meedding.Meedding.dto.ResponseRoomDto;
 import video.meedding.Meedding.dto.RoomDto;
 import video.meedding.Meedding.dto.RoomResponseDto;
 import video.meedding.Meedding.dto.RoomTitleRequestDto;
@@ -48,8 +49,7 @@ public class RoomController {
 
     @PostMapping("/rooms/title")
     public Result findByTitle(@RequestBody RoomTitleRequestDto roomTitleRequestDto) {
-        Room result = roomService.findByTitle(roomTitleRequestDto.getTitle());
-        return responseService.getSingleResult(result);
+        return responseService.getSingleResult(roomService.findByTitle(roomTitleRequestDto.getTitle()));
     }
 
     @DeleteMapping("/rooms/{room_id}")

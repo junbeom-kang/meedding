@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import video.meedding.Meedding.domain.Member;
 import video.meedding.Meedding.dto.ChangePasswordDto;
 import video.meedding.Meedding.dto.CreateMemberDto;
+import video.meedding.Meedding.dto.ResponseMyInfo;
 import video.meedding.Meedding.dto.UpdateMemberDto;
 import video.meedding.Meedding.exception.*;
 import video.meedding.Meedding.repository.MemberRepository;
@@ -89,6 +90,12 @@ public class MemberService {
         Member member = memberRepository.findById(member_id).orElseThrow(NoMemberException::new);
         member.setImage(url);
     }
+    public ResponseMyInfo getMyInfo(Long member_id){
+        Member member = memberRepository.findById(member_id).orElseThrow(NoMemberException::new);
+        ResponseMyInfo responseMyInfo = ResponseMyInfo.convertToMyInfo(member);
+        return responseMyInfo;
+    }
+
 
 
 
