@@ -33,8 +33,7 @@ public class MessageService {
         Message save = messageRepository.save(message);
         return save.getId();
     }
-    public MessageResponseDto findByMessageI
-    d(Long id) {
+    public MessageResponseDto findByMessageId(Long id) {
         Message message = messageRepository.findById(id).orElseThrow(() -> new NoMessageException("없는 메시지입니다"));
         return MessageResponseDto.covertMessageDto(message);
     }
