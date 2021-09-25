@@ -24,6 +24,7 @@ public class CustomExceptionHandler {
         return responseService.getFailResult(-1000, "오류가 발생하였습니다.");
     }
 
+    //회원관련에러
     @ExceptionHandler(ExistedNickNameException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Result existedNickNameException() {
@@ -66,6 +67,7 @@ public class CustomExceptionHandler {
         return responseService.getFailResult(-1007, "인증정보가 유효하지 않습니다.");
     }
 
+    //부가기능 관련 에러
     @ExceptionHandler(CantMakeFriendException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Result cantMakeFriendException() {
@@ -90,7 +92,7 @@ public class CustomExceptionHandler {
     }
 
 
-
+    //Room 관련 에러
     @ExceptionHandler(NoMatchingRoomException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Result noMatchingRoomException() {
@@ -127,18 +129,6 @@ public class CustomExceptionHandler {
         return responseService.getFailResult(-3005, "없는 세션입니다");
     }
 
-    @ExceptionHandler(NoSuchRoomException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public Result NoSuchRoomException() {
-        return responseService.getFailResult(-3006, "없는 회의방입니다");
-    }
-
-
-    @ExceptionHandler(NoSuchElementException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public Result RoomPasswordWrongException() {
-        return responseService.getFailResult(-3007, "방 비밀번호가 틀렸습니다.");
-    }
 
 
 }

@@ -42,7 +42,7 @@ public class RoomService {
 
     @Transactional
     public String join(Long memberId, RoomDto roomDto) throws OpenViduJavaClientException, OpenViduHttpException {
-        Room room = roomRepository.findByRoomTitle(roomDto.getTitle()).orElseThrow(NoSuchRoomException::new);
+        Room room = roomRepository.findByRoomTitle(roomDto.getTitle()).orElseThrow(NoMatchingRoomException::new);
         if (!roomDto.getPassword().equals(room.getRoomPassword())) {
             throw new RoomPasswordWrongException();
         }
@@ -88,7 +88,7 @@ public class RoomService {
     }
     @Transactional
     public void leaveSession(Long member_id,Long room_id,String token) throws OpenViduJavaClientException, OpenViduHttpException {
-        Room room = roomRepository.findById(room_id).orElseThrow(NoSuchRoomException::new);
+        Room room = roomRepository.findById(room_id).orElseThrow(NoMatchingRoomException::new);
         List<Session> activeSessions = openVidu.getActiveSessions();
         Session session = activeSessions.stream()
                 .filter(s -> s.getSessionId().equals(room.getSession()))
@@ -101,7 +101,7 @@ public class RoomService {
                 .orElseThrow();
         System.out.println(connection);
         session.forceDisconnect(connection);
-        RoomParticipate roomParticipate = roomParticipateRepository.findRoomParticipateByMemberAndRoom(member_id, room_id).orElseThrow(NoSuchParticipatorException::new);
+        RoomParticipate roomParticipate = roomParticipateRepository.findRoomParticipateByMemberAndRoom(member_id, room_id).orElseThrow(NoMatchingRoomException::new);
         room.getParticipateList().remove(roomParticipate);
         room.minusPeopleNum();
         roomParticipateRepository.delete(roomParticipate);
@@ -111,7 +111,7 @@ public class RoomService {
         roomRepository.deleteAll();
     }
     public List<ResponseParticipateDto> getParticipate(Long room_id) {
-        Room room = roomRepository.findById(room_id).orElseThrow(NoSuchRoomException::new);
+        Room room = roomRepository.findById(room_id).orElseThrow(NoMatchingRoomException::new);
         List<RoomParticipate> participateList = room.getParticipateList();
         return participateList.stream().map(ResponseParticipateDto::convertToDto).collect(Collectors.toList());
     }
