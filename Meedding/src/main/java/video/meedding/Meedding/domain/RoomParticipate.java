@@ -1,10 +1,12 @@
 package video.meedding.Meedding.domain;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
+@Getter
 @NoArgsConstructor
 public class RoomParticipate {
     @Id
@@ -12,11 +14,11 @@ public class RoomParticipate {
     @Column(name = "roomParticipate_id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "room_id")
     private Room room;
 
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 

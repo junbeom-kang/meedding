@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import video.meedding.Meedding.domain.Member;
 import video.meedding.Meedding.domain.Room;
 import video.meedding.Meedding.domain.RoomParticipate;
+import video.meedding.Meedding.dto.ResponseParticipateDto;
 import video.meedding.Meedding.dto.ResponseRoomDto;
 import video.meedding.Meedding.dto.RoomDto;
 import video.meedding.Meedding.exception.*;
@@ -17,6 +18,7 @@ import video.meedding.Meedding.repository.RoomParticipatorRepository;
 import video.meedding.Meedding.repository.RoomRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -42,7 +44,7 @@ public class RoomService {
     public String join(Long memberId, RoomDto roomDto) throws OpenViduJavaClientException, OpenViduHttpException {
         Room room = roomRepository.findByRoomTitle(roomDto.getTitle()).orElseThrow(NoSuchRoomException::new);
         if (!roomDto.getPassword().equals(room.getRoomPassword())) {
-            throw new PasswordDiffException();
+            throw new RoomPasswordWrongException();
         }
         Member participant = memberRepository.findById(memberId).orElseThrow(NoMemberException::new);
         ConnectionProperties connectionProperties = new ConnectionProperties.Builder()
@@ -103,6 +105,15 @@ public class RoomService {
         room.getParticipateList().remove(roomParticipate);
         room.minusPeopleNum();
         roomParticipateRepository.delete(roomParticipate);
+    }
+    @Transactional
+    public void deleteAll() {
+        roomRepository.deleteAll();
+    }
+    public List<ResponseParticipateDto> getParticipate(Long room_id) {
+        Room room = roomRepository.findById(room_id).orElseThrow(NoSuchRoomException::new);
+        List<RoomParticipate> participateList = room.getParticipateList();
+        return participateList.stream().map(ResponseParticipateDto::convertToDto).collect(Collectors.toList());
     }
 
 

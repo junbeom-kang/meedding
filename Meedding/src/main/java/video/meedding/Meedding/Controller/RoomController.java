@@ -8,10 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import video.meedding.Meedding.config.auth.PrincipalDetails;
 import video.meedding.Meedding.domain.Member;
 import video.meedding.Meedding.domain.Room;
-import video.meedding.Meedding.dto.ResponseRoomDto;
-import video.meedding.Meedding.dto.RoomDto;
-import video.meedding.Meedding.dto.RoomResponseDto;
-import video.meedding.Meedding.dto.RoomTitleRequestDto;
+import video.meedding.Meedding.dto.*;
 import video.meedding.Meedding.dto.response.Result;
 import video.meedding.Meedding.service.ResponseService;
 import video.meedding.Meedding.service.RoomService;
@@ -53,14 +50,27 @@ public class RoomController {
     }
 
     @DeleteMapping("/rooms/{room_id}")
-    public Result deleteRoom(@AuthenticationPrincipal PrincipalDetails principalDetails,@PathVariable Long room_id){
-        roomService.deleteRoom(principalDetails.getMember().getId(),room_id);
+    public Result deleteRoom(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable Long room_id) {
+        roomService.deleteRoom(principalDetails.getMember().getId(), room_id);
         return responseService.getSuccessResult();
     }
+
     @GetMapping("rooms/leave/{room_id}")
-    public Result leaveRoom(@AuthenticationPrincipal PrincipalDetails principalDetails,@PathVariable Long room_id,@RequestHeader("token")String token) throws OpenViduJavaClientException, OpenViduHttpException {
-        roomService.leaveSession(principalDetails.getMember().getId(),room_id,token);
+    public Result leaveRoom(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable Long room_id, @RequestHeader("token") String token) throws OpenViduJavaClientException, OpenViduHttpException {
+        roomService.leaveSession(principalDetails.getMember().getId(), room_id, token);
         return responseService.getSuccessResult();
+    }
+
+    @GetMapping("rooms/deleteAll")
+    public void deleteAll() {
+        roomService.deleteAll();
+    }
+
+    @GetMapping("rooms/People/{room_id}")
+    public Result getParticipateList(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable Long room_id){
+        List<ResponseParticipateDto> participate = roomService.getParticipate(room_id);
+        return responseService.getListResult(participate);
+
     }
 
 }

@@ -53,87 +53,91 @@ public class CustomExceptionHandler {
     public Result noMemberException() {
         return responseService.getFailResult(-1005, "없는 회원입니다.");
     }
-    @ExceptionHandler(NoMatchingRoomException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public Result noMatchingRoomException() {
-        return responseService.getFailResult(-1006, "해당하는 회의방이 없습니다");
-    }
-
-    @ExceptionHandler(CantMakeFriendException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public Result cantMakeFriendException() {
-        return responseService.getFailResult(-1007, "친구를 추가할 수 없습니다.");
-    }
-
-    @ExceptionHandler(DuplicateFriendException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public Result duplicateFriendException() {
-        return responseService.getFailResult(-1008, "이미 존재하는 친구입니다.");
-    }
-    @ExceptionHandler(NoFriendRelationException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public Result noFriendRelationException() {
-        return responseService.getFailResult(-1009, "친구 사이가 아닙니다.");
-    }
-
-
-    @ExceptionHandler(NoMessageException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public Result NoMessageException() {
-        return responseService.getFailResult(-1010, "없는 메시지입니다.");
-    }
-
-    @ExceptionHandler(RoomPasswordDiffException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public Result RoomPasswordDiffException() {
-        return responseService.getFailResult(-1011, "방 비밀번호가 틀렸습니다.");
-    }
-
-    @ExceptionHandler(NoRoomCreatorException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public Result NoRoomCreatorException() {
-        return responseService.getFailResult(-1012, "방을 만든사람이 아닙니다");
-    }
-
-    @ExceptionHandler(ExistedRoomNameException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public Result ExistedRoomNameException() {
-        return responseService.getFailResult(-1013, "이미 존재하는 방제목입니다");
-    }
-
-    @ExceptionHandler(NoSuchParticipatorException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public Result NoSuchParticipatorException() {
-        return responseService.getFailResult(-1014, "없는 참가자 입니다");
-    }
-
-    @ExceptionHandler(NoRoomSessionException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public Result NoRoomSessionException() {
-        return responseService.getFailResult(-1015, "없는 세션입니다");
-    }
-
-    @ExceptionHandler(NoSuchRoomException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public Result NoSuchRoomException() {
-        return responseService.getFailResult(-1016, "없는 회의방입니다");
-    }
 
     @ExceptionHandler(AccessDeniedException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Result AccessDeniedException() {
-        return responseService.getFailResult(-1017, "해당 작업에 권한이 없습니다.");
+        return responseService.getFailResult(-1006, "해당 작업에 권한이 없습니다.");
     }
 
     @ExceptionHandler(AuthenticationEntryPointException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Result AuthenticationEntryPointException() {
-        return responseService.getFailResult(-1018, "인증정보가 유효하지 않습니다.");
+        return responseService.getFailResult(-1007, "인증정보가 유효하지 않습니다.");
     }
+
+    @ExceptionHandler(CantMakeFriendException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Result cantMakeFriendException() {
+        return responseService.getFailResult(-2000, "친구를 추가할 수 없습니다.");
+    }
+
+    @ExceptionHandler(DuplicateFriendException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Result duplicateFriendException() {
+        return responseService.getFailResult(-2001, "이미 존재하는 친구입니다.");
+    }
+    @ExceptionHandler(NoFriendRelationException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Result noFriendRelationException() {
+        return responseService.getFailResult(-2002, "친구 사이가 아닙니다.");
+    }
+
+    @ExceptionHandler(NoMessageException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Result NoMessageException() {
+        return responseService.getFailResult(-2003, "없는 메시지입니다.");
+    }
+
+
+
+    @ExceptionHandler(NoMatchingRoomException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Result noMatchingRoomException() {
+        return responseService.getFailResult(-3000, "해당하는 회의방이 없습니다");
+    }
+
+    @ExceptionHandler(RoomPasswordDiffException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Result RoomPasswordDiffException() {
+        return responseService.getFailResult(-3001, "방 비밀번호가 틀렸습니다.");
+    }
+
+    @ExceptionHandler(NoRoomCreatorException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Result NoRoomCreatorException() {
+        return responseService.getFailResult(-3002, "방을 만든사람이 아닙니다");
+    }
+
+    @ExceptionHandler(ExistedRoomNameException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Result ExistedRoomNameException() {
+        return responseService.getFailResult(-3003, "이미 존재하는 방제목입니다");
+    }
+
+    @ExceptionHandler(NoSuchParticipatorException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Result NoSuchParticipatorException() {
+        return responseService.getFailResult(-3004, "없는 참가자 입니다");
+    }
+
+    @ExceptionHandler(NoRoomSessionException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Result NoRoomSessionException() {
+        return responseService.getFailResult(-3005, "없는 세션입니다");
+    }
+
+    @ExceptionHandler(NoSuchRoomException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Result NoSuchRoomException() {
+        return responseService.getFailResult(-3006, "없는 회의방입니다");
+    }
+
+
     @ExceptionHandler(NoSuchElementException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public Result NoSuchElementException() {
-        return responseService.getFailResult(-1019, "세션이 종료되었습니다.");
+    public Result RoomPasswordWrongException() {
+        return responseService.getFailResult(-3007, "방 비밀번호가 틀렸습니다.");
     }
 
 
