@@ -1,5 +1,6 @@
 package video.meedding.Meedding.Controller;
 
+import io.openvidu.java.client.OpenViduHttpException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -99,9 +100,9 @@ public class CustomExceptionHandler {
         return responseService.getFailResult(-3000, "해당하는 회의방이 없습니다");
     }
 
-    @ExceptionHandler(RoomPasswordDiffException.class)
+    @ExceptionHandler(RoomPasswordWrongException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public Result RoomPasswordDiffException() {
+    public Result RoomPasswordWrongException() {
         return responseService.getFailResult(-3001, "방 비밀번호가 틀렸습니다.");
     }
 
@@ -129,6 +130,11 @@ public class CustomExceptionHandler {
         return responseService.getFailResult(-3005, "없는 세션입니다");
     }
 
+    @ExceptionHandler(OpenViduHttpException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Result OpenViduHttpException() {
+        return responseService.getFailResult(-3006, "회의방을 사용할 수 없습니다");
+    }
 
 
 }
