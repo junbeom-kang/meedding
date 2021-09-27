@@ -11,6 +11,7 @@ import video.meedding.Meedding.domain.Member;
 import video.meedding.Meedding.dto.response.Result;
 import video.meedding.Meedding.service.MemberService;
 import video.meedding.Meedding.service.ResponseService;
+import video.meedding.Meedding.service.RoomService;
 
 import java.util.List;
 
@@ -20,6 +21,7 @@ import java.util.List;
 public class TestController {
     private final MemberService memberService;
     private final ResponseService responseService;
+    private final RoomService roomService;
     private final OpenVidu openVidu;
 
     @GetMapping("/home")
@@ -41,10 +43,5 @@ public class TestController {
         System.out.println(openVidu.getActiveSessions());
         return responseService.getSuccessResult();
     }
-    @GetMapping("/test/session2")
-    public Result TEST2() {
-        System.out.println(openVidu.getActiveSessions());
-        System.out.println(openVidu.getActiveSessions().get(0).getConnections().get(0).getToken());
-        return responseService.getSuccessResult();
-    }
+
 }

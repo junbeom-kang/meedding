@@ -18,6 +18,7 @@ import video.meedding.Meedding.repository.RoomParticipatorRepository;
 import video.meedding.Meedding.repository.RoomRepository;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -58,6 +59,7 @@ public class RoomService {
                 .findFirst()
                 .orElseThrow();
         if (session == null) {
+            roomRepository.delete(room);
             throw new NoRoomSessionException();
         }
         String token = session.createConnection(connectionProperties).getToken();
@@ -99,12 +101,14 @@ public class RoomService {
                 .filter(s -> s.getToken().equals(token))
                 .findFirst()
                 .orElseThrow();
-        System.out.println(connection);
         session.forceDisconnect(connection);
         RoomParticipate roomParticipate = roomParticipateRepository.findRoomParticipateByMemberAndRoom(member_id, room_id).orElseThrow(NoMatchingRoomException::new);
         room.getParticipateList().remove(roomParticipate);
         room.minusPeopleNum();
         roomParticipateRepository.delete(roomParticipate);
+        if (room.getPeopleNum() == 0) {
+            roomRepository.delete(room);
+        }
     }
     @Transactional
     public void deleteAll() {
@@ -115,8 +119,5 @@ public class RoomService {
         List<RoomParticipate> participateList = room.getParticipateList();
         return participateList.stream().map(ResponseParticipateDto::convertToDto).collect(Collectors.toList());
     }
-
-
-
 
 }
