@@ -12,10 +12,15 @@ Back end-Spring Boot</br>
 * * *
 
 # 구현 기능
-<img src = "https://user-images.githubusercontent.com/59498625/121371217-5be62500-c978-11eb-8501-0f7e00268b3a.png" width="85%" height="85%">
+**1.화상회의 및 채팅 구현 기능**</br>
+<img src = "https://user-images.githubusercontent.com/59498625/138603413-b4952438-2f13-4dd2-9ba8-82295b11c015.png" width="85%" height="85%"></br>
 
-**화상회의 구현 기능**
+**2.접속중인 회원 정보와 참여중인 방 정보 확인 기능**</br>
+<img src = "https://user-images.githubusercontent.com/59498625/138603885-77208cdd-35b9-4390-9ae6-da80e8c07618.png" width="85%" height="85%"></br>
 
+**3.회의방 생성,입장 및 개설되어 있는 방목록 보기 기능**</br>
+<img src = "https://user-images.githubusercontent.com/59498625/138605360-726adfdd-b641-456e-8c14-8da01eb769a1.png" width="85%" height="85%"></br>
+**4.기타 회원관련 기능(로그인,프로필,회원간 쪽지,친구목록 및 검색기능)**</br>
 <img src = "https://user-images.githubusercontent.com/59498625/121370420-ae731180-c977-11eb-8606-e19007d5759d.png" width="85%" height="85%">
 
 * * *
@@ -24,9 +29,6 @@ Back end-Spring Boot</br>
 <img src = "https://user-images.githubusercontent.com/59498625/121373249-e11e0980-c979-11eb-8443-0d87e2b9f710.png" width="85%" height="85%">
 
 
-## 서버 설정
-nginx를 통한 HTTPS 설정 및 리버스 프록시를 활용하여 CORS
-<br><br>
 ### 2021/09 분산 아키텍쳐로 변경
 구 아키텍쳐
 <img src="https://user-images.githubusercontent.com/59498625/132798206-39ccbd68-4883-48ef-8999-3bbb01a2f76d.png" width="80%" height="80%">
