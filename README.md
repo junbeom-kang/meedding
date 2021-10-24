@@ -25,8 +25,10 @@ Back end-Spring Boot</br>
 
 * * *
 #  개발 주요 스택
-
 <img src = "https://user-images.githubusercontent.com/59498625/121373249-e11e0980-c979-11eb-8443-0d87e2b9f710.png" width="85%" height="85%">
+
+**테스트 코드 작성**</br>
+<img src = "https://user-images.githubusercontent.com/59498625/138605819-561a58f3-6b31-49c4-81ec-4444e2b78b60.png" width="85%" height="85%"></br>
 
 
 ### 2021/09 분산 아키텍쳐로 변경
