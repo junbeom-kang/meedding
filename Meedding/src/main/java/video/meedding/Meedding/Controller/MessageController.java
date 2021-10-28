@@ -1,5 +1,7 @@
 package video.meedding.Meedding.Controller;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -21,13 +23,15 @@ import java.util.stream.Collectors;
 public class MessageController {
     private final MessageService messageService;
     private final ResponseService responseService;
-
+    @ApiOperation(value = "메시지 전송", notes = "해당 회원에게 메시지를 전송한다.")
+    @ApiImplicitParam(name = "Authorization", value = "access-token", required = true, dataType = "String", paramType = "header")
     @PostMapping("/message")
     public Result createMessage(@RequestBody @Valid CreateMessageDto createMessageDto,@AuthenticationPrincipal PrincipalDetails principal) {
         Long message = messageService.Message(principal.getMember().getId(),createMessageDto);
         return responseService.getSingleResult(message);
     }
-
+    @ApiOperation(value = "보낸 메세지 목록", notes = "토큰 주인의 보낸 메세지 목록을 받아온다.")
+    @ApiImplicitParam(name = "Authorization", value = "access-token", required = true, dataType = "String", paramType = "header")
     @GetMapping("/message/sent")
     public Result sentMessages(@AuthenticationPrincipal PrincipalDetails principal) {
         List<Message> bySentMember = messageService.findBySentMember(principal.getMember());
@@ -36,7 +40,8 @@ public class MessageController {
                         collect(Collectors.toList());
         return responseService.getListResult(result);
     }
-
+    @ApiOperation(value = "받은 메세지 목록", notes = "토큰 주인의 받은 메세지 목록을 받아온다.")
+    @ApiImplicitParam(name = "Authorization", value = "access-token", required = true, dataType = "String", paramType = "header")
     @GetMapping("/message/received")
     public Result receivedMessages(@AuthenticationPrincipal PrincipalDetails principal) {
         List<Message> byReceivedMember = messageService.findByReceivedMember(principal.getMember());
@@ -46,7 +51,8 @@ public class MessageController {
         return responseService.getListResult(result);
     }
 
-
+    @ApiOperation(value = "메시지 단건 조회", notes = "해당 PK의 메시지를 단건 조회한다.")
+    @ApiImplicitParam(name = "Authorization", value = "access-token", required = true, dataType = "String", paramType = "header")
     @GetMapping("/message/{message_id}")
     public Result readMessage(@PathVariable Long message_id) {
         MessageResponseDto messageResponseDto=messageService.findByMessageId(message_id);
