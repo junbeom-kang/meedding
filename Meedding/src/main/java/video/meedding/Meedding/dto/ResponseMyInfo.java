@@ -3,6 +3,7 @@ package video.meedding.Meedding.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Synchronized;
 import video.meedding.Meedding.domain.Member;
 
 import java.time.LocalDate;

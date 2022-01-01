@@ -1,6 +1,9 @@
 package video.meedding.Meedding.Controller;
 import io.openvidu.java.client.OpenVidu;
 import lombok.RequiredArgsConstructor;
+import org.springframework.expression.Expression;
+import org.springframework.expression.ExpressionParser;
+import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,6 +44,18 @@ public class TestController {
     @GetMapping("/test/session")
     public Result TEST1() {
         System.out.println(openVidu.getActiveSessions());
+        return responseService.getSuccessResult();
+    }
+    /*
+    AuthenticationPrincipalArgumentResolver 동작원리 스터디
+     */
+
+    @GetMapping("/test/security")
+    public Result TEST2(@AuthenticationPrincipal PrincipalDetails principalDetails) {
+        ExpressionParser parser = new SpelExpressionParser();
+        Expression expression = parser.parseExpression("PrincipalDetails");
+        System.out.println(expression.getExpressionString());
+        System.out.println(principalDetails.getClass());
         return responseService.getSuccessResult();
     }
 

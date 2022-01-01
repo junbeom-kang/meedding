@@ -98,6 +98,7 @@ public class MemberController {
     @ApiImplicitParam(name = "Authorization", value = "access-token", required = true, dataType = "String", paramType = "header")
     @GetMapping("/members/me")
     public Result getMyInfo(@AuthenticationPrincipal PrincipalDetails principal) {
+        System.out.println("필터링?");
         return responseService.getSingleResult(memberService.getMyInfo(principal.getMember().getId()));
     }
     @ApiOperation(value = "비밀번호 변경", notes = "비밀번호를 변경한다")
