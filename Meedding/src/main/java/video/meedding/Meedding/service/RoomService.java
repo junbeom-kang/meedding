@@ -18,6 +18,7 @@ import video.meedding.Meedding.repository.RoomParticipatorRepository;
 import video.meedding.Meedding.repository.RoomRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 

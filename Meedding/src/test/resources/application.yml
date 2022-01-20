@@ -1,16 +1,33 @@
 spring:
-  #datasource:
-    #url: jdbc:mariadb://h2:tcp://localhost/~/jpashop
-    #username: sa
-    #password:
-    #driver-class-name: org.h2.Driver
-    #이렇게하면 히카리가 커넥션풀같은걸 다 해줌
-  #jpa:
-    #hibernate:
-      #ddl-auto: create #자동으로 테이블 만들어주는 모드, 실행시점에 가지고있는 테이블을 지우고 다시생성
-    #properties:
-      #hibernate:
-        #show_sql: true #systemout으로 보여주기때문에 안댐
-        #format_sql: true
+  jpa:
+    datasource:
+      url: jdbc:mariadb://meedding.ctoilrrq7tkn.ap-northeast-2.rds.amazonaws.com/Meedding
+      username: junbeom_kang
+      password: wnsqja12
+      driver-class-name: org.mariadb.jdbc.Driver
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        default_batch_fetch_size: 100
+    open-in-view: false
+  profiles:
+    include: security
+
 logging.level:
-  org.hibernate.SQL: debug #JPA 하이버네이트가 남기는 sql이 다 보임 로거를 통해서
+  web: debug
+  org.hibernate.SQL: #debug
+
+domain:
+  https://meedding.kro.kr
+secret: junbeom
+kakao:
+  clientId: 9ab70c68899154e1060b5e2979b54d92
+  redirectUri: https://meedding.kro.kr/api/auth/kakao/callback
+cosKey: cos1234
+
+openvidu:
+  url: https://meedding-openvidu.kro.kr/
+  secret: MY_SECRET
