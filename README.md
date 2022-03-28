@@ -1,4 +1,5 @@
-#  meedding https://meedding.kro.kr/
+#  meedding 서비스 종료 
+기존 url https://meedding.kro.kr/
 
 ###  WebRTC를 활용한 화상회의 웹 어플리케이션   
 # 서버 아키텍쳐
